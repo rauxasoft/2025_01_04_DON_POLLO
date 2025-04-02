@@ -62,4 +62,10 @@ public class Establecimiento {
 		return Objects.equals(id, other.id);
 	}
 
+	@Override
+	public String toString() {
+		return "Establecimiento [id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", datosContacto="
+				+ datosContacto + "]";
+	}
+
 }

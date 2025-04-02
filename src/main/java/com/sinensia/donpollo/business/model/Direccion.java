@@ -52,4 +52,10 @@ public class Direccion {
 		this.pais = pais;
 	}
 
+	@Override
+	public String toString() {
+		return "Direccion [via=" + via + ", poblacion=" + poblacion + ", codigoPostal=" + codigoPostal + ", provincia="
+				+ provincia + ", pais=" + pais + "]";
+	}
+
 }

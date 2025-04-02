@@ -34,4 +34,9 @@ public class DatosContacto {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return "DatosContacto [telefono1=" + telefono1 + ", telefono2=" + telefono2 + ", email=" + email + "]";
+	}
+	
 }
