@@ -10,6 +10,7 @@ public class Producto {
 	private Date fechaAlta;
 	private double precio;
 	private String descripcion;
+	private Familia familia;
 	private boolean descatalogado;
 	
 	public Producto() {
@@ -54,6 +55,14 @@ public class Producto {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public Familia getFamilia() {
+		return familia;
+	}
+
+	public void setFamilia(Familia familia) {
+		this.familia = familia;
 	}
 
 	public boolean isDescatalogado() {
