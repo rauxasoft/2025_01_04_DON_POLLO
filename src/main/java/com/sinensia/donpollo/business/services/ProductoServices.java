@@ -70,11 +70,6 @@ public interface ProductoServices {
 	 *  
 	 * Ejemplo:
 	 * 
-	 * <ul>
-	 * <li>Esto</li>
-	 * <li>Lo otro</li>
-	 * </ul>
-	 * 
 	 * Si porcentaje = 2.0 => el producto se incrementa un 2%
 	 * 
 	 * Si el porcentaje es <= 0 se lanza IllegalArgumentException
