@@ -1,19 +1,33 @@
 package com.sinensia.donpollo.business.services.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import com.sinensia.donpollo.business.model.Familia;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
 
+@Service
 public class ProductoServicesImpl implements ProductoServices {
 
+	private final Map<Long, Producto> PRODUCTOS_DB = new HashMap<>();
+	
+	public ProductoServicesImpl() {
+		initData();
+	}
+	
 	@Override
 	public Long create(Producto producto) {
-		// TODO Auto-generated method stub
+		// TODO
+	
 		return null;
 	}
 
@@ -37,44 +51,53 @@ public class ProductoServicesImpl implements ProductoServices {
 
 	@Override
 	public List<Producto> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>(PRODUCTOS_DB.values());
 	}
 
 	@Override
 	public List<Producto> getByFamilia(Familia familia) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return PRODUCTOS_DB.values().stream()
+				.filter(producto -> producto.getFamilia().equals(familia))
+				.toList();
 	}
 
 	@Override
 	public List<Producto> getByPrecioBetween(double min, double max) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return PRODUCTOS_DB.values().stream()
+				.filter(producto -> producto.getPrecio() >= min && producto.getPrecio() <= max)
+				.toList();
 	}
 
 	@Override
 	public List<Producto> getDescatalogados() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return PRODUCTOS_DB.values().stream()
+				.filter(producto -> producto.isDescatalogado())
+				.toList();
 	}
 
 	@Override
 	public List<Producto> getBetweenFechaAlta(Date desde, Date hasta) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return PRODUCTOS_DB.values().stream()
+				.filter(producto -> producto.getFechaAlta().after(desde) && producto.getFechaAlta().before(hasta))
+				.toList();
 	}
 
 	@Override
 	public int getNumeroTotalProductos() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return PRODUCTOS_DB.size();
 	}
 
 	@Override
 	public int getNumeroTotalProductosByFamilia(Familia familia) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return (int) PRODUCTOS_DB.values().stream()
+			.filter(producto -> producto.getFamilia().equals(familia))
+			.count();	
 	}
 
 	@Override
@@ -85,7 +108,13 @@ public class ProductoServicesImpl implements ProductoServices {
 
 	@Override
 	public void incrementarPrecios(List<Producto> productos, double porcentaje) {
-		// TODO Auto-generated method stub
+		
+		productos.stream().forEach(producto -> {
+			double precio = producto.getPrecio();
+			double nuevoPrecio = precio + (precio * porcentaje) / 100;
+			producto.setPrecio(nuevoPrecio);
+			PRODUCTOS_DB.replace(producto.getId(), producto);
+		});
 		
 	}
 
@@ -95,10 +124,6 @@ public class ProductoServicesImpl implements ProductoServices {
 		
 	}
 
-	// ESTO NO
-	
-	// **************************************************************************
-	
 	@Override
 	public Map<Familia, Integer> getEstadisticaNumeroProductosByFamilia() {
 		// TODO Auto-generated method stub
@@ -110,7 +135,95 @@ public class ProductoServicesImpl implements ProductoServices {
 		// TODO Auto-generated method stub
 		return null;
 	}
+		
+	// *******************************************************
+	//
+	// Private Methdos
+	//
+	// *******************************************************
 	
-	// **************************************************************************
+	private void initData() {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
+		Date fecha1 = null;
+		Date fecha2 = null;
+		Date fecha3 = null;
+		Date fecha4 = null;
+		Date fecha5 = null;
+		
+		try {
+			fecha1 = sdf.parse("23/08/2023");
+			fecha2 = sdf.parse("24/08/2023");
+			fecha3 = sdf.parse("27/08/2023");
+			fecha4 = sdf.parse("30/08/2023");
+			fecha5 = sdf.parse("10/09/2023");
+		} catch (ParseException e) {
+			
+		}
+		
+		Familia familia1 = new Familia();
+		Familia familia2 = new Familia();
+		
+		familia1.setId(10L);
+		familia2.setId(20L);
+		
+		familia1.setNombre("LICORES");
+		familia2.setNombre("TAPAS");
+		
+		Producto producto1 = new Producto();
+		Producto producto2 = new Producto();
+		Producto producto3 = new Producto();
+		Producto producto4 = new Producto();
+		Producto producto5 = new Producto();
+		
+		producto1.setId(100L);
+		producto2.setId(101L);
+		producto3.setId(102L);
+		producto4.setId(103L);
+		producto5.setId(104L);
+		
+		producto1.setNombre("Copa de Oban");
+		producto1.setDescripcion("Delicioso whisky escocés");
+		producto1.setFamilia(familia1);
+		producto1.setPrecio(17.20);
+		producto1.setDescatalogado(false);
+		producto1.setFechaAlta(fecha1);
+		
+		producto2.setNombre("Bomba de la Barceloneta");
+		producto2.setDescripcion("Deliciosa patata con carne rebozada. Muy picante!");
+		producto2.setFamilia(familia2);
+		producto2.setPrecio(8.50);
+		producto2.setDescatalogado(false);
+		producto2.setFechaAlta(fecha2);
+		
+		producto3.setNombre("Cachopo");
+		producto3.setDescripcion("Auténtico cachopo asturiano");
+		producto3.setFamilia(familia2);
+		producto3.setPrecio(11.00);
+		producto3.setDescatalogado(false);
+		producto3.setFechaAlta(fecha3);
+		
+		producto4.setNombre("Anís de el Mono");
+		producto4.setDescripcion("El delicioso y aromático anís de Badalona");
+		producto4.setFamilia(familia1);
+		producto4.setPrecio(6.45);
+		producto4.setDescatalogado(true);
+		producto4.setFechaAlta(fecha4);
+		
+		producto5.setNombre("Patatas Bravas");
+		producto5.setDescripcion("Patatas bravas de verdad. Muy picantes! (no nos hacemos responsables)");
+		producto5.setFamilia(familia2);
+		producto5.setPrecio(6.00);
+		producto5.setDescatalogado(false);
+		producto5.setFechaAlta(fecha5);
+		
+		PRODUCTOS_DB.put(producto1.getId(), producto1);
+		PRODUCTOS_DB.put(producto2.getId(), producto2);
+		PRODUCTOS_DB.put(producto3.getId(), producto3);
+		PRODUCTOS_DB.put(producto4.getId(), producto4);
+		PRODUCTOS_DB.put(producto5.getId(), producto5);
+			
+	}
 
 }

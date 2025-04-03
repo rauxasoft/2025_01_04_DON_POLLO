@@ -89,5 +89,4 @@ public interface ProductoServices {
 	 */
 	Map<Familia, Double> getEstadisticaPrecioMedioProductosByFamilia();
 	
-	
 }

@@ -1,15 +1,19 @@
 package com.sinensia.donpollo.business.services.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
 
 import com.sinensia.donpollo.business.model.DatosContacto;
 import com.sinensia.donpollo.business.model.Direccion;
 import com.sinensia.donpollo.business.model.Establecimiento;
 import com.sinensia.donpollo.business.services.EstablecimientoServices;
 
+@Service
 public class EstablecimientoServicesImpl implements EstablecimientoServices {
 
 	private final Map<Long, Establecimiento> ESTABLECIMIENTOS_DB = new HashMap<>();
@@ -20,8 +24,18 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 	
 	@Override
 	public Long create(Establecimiento establecimiento) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if(establecimiento.getId() != null) {
+			throw new IllegalStateException("Para crear un establecimiento la id ha de ser null");
+		}
+		
+		Long id = System.currentTimeMillis();
+		
+		establecimiento.setId(id);
+		
+		ESTABLECIMIENTOS_DB.put(id, establecimiento);
+	
+		return id;
 	}
 
 	@Override
@@ -31,14 +45,26 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 
 	@Override
 	public void update(Establecimiento establecimiento) {
-		// TODO Auto-generated method stub
+		
+		Long id = establecimiento.getId();
+		
+		if(id == null) {
+			throw new IllegalStateException("La id de establecimiento no puede ser null");
+		}
+		
+		boolean existe = ESTABLECIMIENTOS_DB.containsKey(id);
+		
+		if(!existe) {
+			throw new IllegalArgumentException("No existe el establecimiento con id [" + id + "]");
+		}
+		
+		ESTABLECIMIENTOS_DB.replace(id, establecimiento);
 		
 	}
 
 	@Override
 	public List<Establecimiento> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>(ESTABLECIMIENTOS_DB.values());
 	}
 	
 	// *******************************************************
