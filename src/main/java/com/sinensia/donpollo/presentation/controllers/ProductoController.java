@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
 import com.sinensia.donpollo.presentation.config.ErrorResponse;
@@ -66,17 +64,5 @@ public class ProductoController {
 		productoServices.update(producto);
 	 
 	}
-	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<?> exceptionHandler(Exception ex){
-		
-		System.out.println(ex); // LOG
-		
-		return ResponseEntity.internalServerError().body(new ErrorResponse("Algo ha ido mal. Estamos trabajando en ello."));
-	}
-	
-	@ExceptionHandler(BusinessException.class)
-	public ResponseEntity<?> illegalStateExceptionHandler(BusinessException ex){
-		return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
-	}
+
 }

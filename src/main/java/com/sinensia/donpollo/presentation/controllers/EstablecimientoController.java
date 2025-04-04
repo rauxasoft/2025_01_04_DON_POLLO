@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -51,35 +52,23 @@ public class EstablecimientoController {
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Establecimiento establecimiento, UriComponentsBuilder ucb){
 		
-		Long id = null;
-		
-		try {
-			id = establecimientoServices.create(establecimiento);
-		} catch (IllegalStateException e) {
-			return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-		}
-		
+		Long id = establecimientoServices.create(establecimiento);
 		URI uri = ucb.path("/establecimientos/{id}").build(id);
 		
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody Establecimiento establecimiento, @PathVariable Long id){
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void update(@RequestBody Establecimiento establecimiento, @PathVariable Long id){
 		
 		establecimiento.setId(id);
-		
-		try {
-			establecimientoServices.update(establecimiento);
-		} catch (Exception e) {
-			return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-		}
-		
-		return ResponseEntity.noContent().build();
+		establecimientoServices.update(establecimiento);
+
 	}
 	
 	@PatchMapping("/{id}")
-	public ResponseEntity<?> prueba(@PathVariable Long id, @RequestBody Map<String, Object> values) {
+	public ResponseEntity<?> patch(@PathVariable Long id, @RequestBody Map<String, Object> values) {
 		
 		Optional<Establecimiento> optional = establecimientoServices.read(id);
 		
