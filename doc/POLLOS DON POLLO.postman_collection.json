@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "59cfb513-c8dd-426f-90ba-7f3fb7543a1e",
+		"name": "POLLOS DON POLLO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1059617"
+	},
+	"item": [
+		{
+			"name": "Establecimientos",
+			"item": [
+				{
+					"name": "obtener todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/establecimientos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"establecimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/establecimientos/100",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"establecimientos",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"DON POLLO - POSTMAN\",\r\n    \"direccion\": {\r\n        \"via\": \"Avda. Monforte de Lemos, 36\",\r\n        \"poblacion\": \"Madrid\",\r\n        \"codigoPostal\": \"28029\",\r\n        \"provincia\": \"Madrid\",\r\n        \"pais\": \"España\"\r\n    },\r\n    \"datosContacto\": {\r\n        \"telefono1\": \"91 220 23 44\",\r\n        \"telefono2\": null,\r\n        \"email\": \"vaguada@donpollo.com\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/establecimientos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"establecimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"ESTABLECIMIENTO UPDATED\",\r\n    \"direccion\": {\r\n        \"via\": \"Avda. Monforte de Lemos, 36\",\r\n        \"poblacion\": \"Madrid\",\r\n        \"codigoPostal\": \"28029\",\r\n        \"provincia\": \"Madrid\",\r\n        \"pais\": \"España\"\r\n    },\r\n    \"datosContacto\": {\r\n        \"telefono1\": \"91 220 23 44\",\r\n        \"telefono2\": null,\r\n        \"email\": \"emailupdated@donpollo.com\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/establecimientos/100",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"establecimientos",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update parcial",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Actualizado desde PATCH\",\r\n    \"telefono2\": \"666666666\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/establecimientos/100",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"establecimientos",
+								"100"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": []
+		}
+	]
+}
