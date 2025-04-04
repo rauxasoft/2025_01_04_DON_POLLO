@@ -128,7 +128,140 @@
 		},
 		{
 			"name": "Productos",
-			"item": []
+			"item": [
+				{
+					"name": "obtener todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/productos/100",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Pollo POSTMAN\",\r\n    \"fechaAlta\": \"2023-08-22T22:00:00.000+00:00\",\r\n    \"precio\": 17.2,\r\n    \"descripcion\": \"Delicioso pollo POSTMAN\",\r\n    \"familia\": {\r\n        \"id\": 100,\r\n        \"nombre\": \"COMIDAS\"\r\n    },\r\n    \"descatalogado\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/productos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Copa de Oban ACTUALIZADA!\",\r\n    \"fechaAlta\": \"2023-08-22T22:00:00.000+00:00\",\r\n    \"precio\": 5.0,\r\n    \"descripcion\": \"Delicioso whisky escocés con nuevo precio actualizado desde POSTMAN\",\r\n    \"familia\": {\r\n        \"id\": 10,\r\n        \"nombre\": \"LICORES\"\r\n    },\r\n    \"descatalogado\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/productos/100",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"100"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Familias",
+			"item": [
+				{
+					"name": "obtener todas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/familias",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"familias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dependientes",
+			"item": [
+				{
+					"name": "obtener todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/dependientes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"dependientes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
