@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Familia;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
@@ -30,7 +31,7 @@ public class ProductoServicesDummyImpl implements ProductoServices {
 	public Long create(Producto producto) {
 		
 		if(producto.getId() != null) {
-			throw new IllegalStateException("Para crear un producto la id ha de ser null");
+			throw new BusinessException("Para crear un producto la id ha de ser null");
 		}
 		
 		Long id = System.currentTimeMillis();
@@ -53,13 +54,13 @@ public class ProductoServicesDummyImpl implements ProductoServices {
 		Long id = producto.getId();
 		
 		if(id == null) {
-			throw new IllegalStateException("La id del producto no puede ser null");
+			throw new BusinessException("La id del producto no puede ser null");
 		}
 		
 		boolean existe = PRODUCTOS_DB.containsKey(id);
 		
 		if(!existe) {
-			throw new IllegalArgumentException("No existe el producto con id [" + id + "]");
+			throw new BusinessException("No existe el producto con id [" + id + "]");
 		}
 		
 		PRODUCTOS_DB.replace(id, producto);

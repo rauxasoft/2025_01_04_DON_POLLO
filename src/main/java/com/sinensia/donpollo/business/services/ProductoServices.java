@@ -11,7 +11,7 @@ import com.sinensia.donpollo.business.model.Producto;
 public interface ProductoServices {
 
 	/**
-	 * Si la id no es null lanza IllegalStateException
+	 * Si la id no es null lanza BusinessException
 	 * 
 	 */
 	Long create(Producto producto);										
@@ -19,13 +19,13 @@ public interface ProductoServices {
 	Optional<Producto> read(Long idProducto);							
 	
 	/**
-	 * Si la id es null o no existe lanza IllegalArgumentException
+	 * Si la id es null o no existe lanza BusinessException
 	 * 
 	 */
 	void update(Producto producto);										
 	
 	/**
-	 * Si la id es null o no existe lanza IllegalStateException
+	 * Si la id es null o no existe lanza BusinessException
 	 * 
 	 */
 	void delete(Long idProducto);										
@@ -48,7 +48,7 @@ public interface ProductoServices {
 	 * 
 	 * Si porcentaje = 2.0 => el producto se incrementa un 2%
 	 * 
-	 * Si el porcentaje es <= 0 se lanza IllegalArgumentException
+	 * Si el porcentaje es <= 0 se lanza BusinessException
 	 * 
 	 */
 	void incrementarPrecios(Familia familia, double porcentaje);
@@ -60,7 +60,7 @@ public interface ProductoServices {
 	 * 
 	 * Si porcentaje = 2.0 => el producto se incrementa un 2%
 	 * 
-	 * Si el porcentaje es <= 0 se lanza IllegalArgumentException
+	 * Si el porcentaje es <= 0 se lanza BusinessException
 	 * 
 	 */
 	void incrementarPrecios(List<Producto> productos, double porcentaje);
@@ -72,7 +72,7 @@ public interface ProductoServices {
 	 * 
 	 * Si porcentaje = 2.0 => el producto se incrementa un 2%
 	 * 
-	 * Si el porcentaje es <= 0 se lanza IllegalArgumentException
+	 * Si el porcentaje es <= 0 se lanza BusinessException
 	 * 
 	 */
 	void incrementarPrecios(Long[] idsProducto, double porcentaje);

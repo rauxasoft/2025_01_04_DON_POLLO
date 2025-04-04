@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.DatosContacto;
 import com.sinensia.donpollo.business.model.Direccion;
 import com.sinensia.donpollo.business.model.Establecimiento;
@@ -28,7 +29,7 @@ public class EstablecimientoServicesDummyImpl implements EstablecimientoServices
 	public Long create(Establecimiento establecimiento) {
 
 		if(establecimiento.getId() != null) {
-			throw new IllegalStateException("Para crear un establecimiento la id ha de ser null");
+			throw new BusinessException("Para crear un establecimiento la id ha de ser null");
 		}
 		
 		Long id = System.currentTimeMillis();
@@ -51,13 +52,13 @@ public class EstablecimientoServicesDummyImpl implements EstablecimientoServices
 		Long id = establecimiento.getId();
 		
 		if(id == null) {
-			throw new IllegalStateException("La id de establecimiento no puede ser null");
+			throw new BusinessException("La id de establecimiento no puede ser null");
 		}
 		
 		boolean existe = ESTABLECIMIENTOS_DB.containsKey(id);
 		
 		if(!existe) {
-			throw new IllegalArgumentException("No existe el establecimiento con id [" + id + "]");
+			throw new BusinessException("No existe el establecimiento con id [" + id + "]");
 		}
 		
 		ESTABLECIMIENTOS_DB.replace(id, establecimiento);
