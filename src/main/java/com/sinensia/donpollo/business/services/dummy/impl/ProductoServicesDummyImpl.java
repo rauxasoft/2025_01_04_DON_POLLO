@@ -28,21 +28,42 @@ public class ProductoServicesDummyImpl implements ProductoServices {
 	
 	@Override
 	public Long create(Producto producto) {
-		// TODO
+		
+		if(producto.getId() != null) {
+			throw new IllegalStateException("Para crear un producto la id ha de ser null");
+		}
+		
+		Long id = System.currentTimeMillis();
+		
+		producto.setId(id);
+		
+		PRODUCTOS_DB.put(id, producto);
 	
-		return null;
+		return id;
 	}
 
 	@Override
 	public Optional<Producto> read(Long idProducto) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return Optional.ofNullable(PRODUCTOS_DB.get(idProducto));
 	}
 
 	@Override
 	public void update(Producto producto) {
-		// TODO Auto-generated method stub
 		
+		Long id = producto.getId();
+		
+		if(id == null) {
+			throw new IllegalStateException("La id del producto no puede ser null");
+		}
+		
+		boolean existe = PRODUCTOS_DB.containsKey(id);
+		
+		if(!existe) {
+			throw new IllegalArgumentException("No existe el producto con id [" + id + "]");
+		}
+		
+		PRODUCTOS_DB.replace(id, producto);
+			
 	}
 
 	@Override
@@ -104,8 +125,15 @@ public class ProductoServicesDummyImpl implements ProductoServices {
 
 	@Override
 	public void incrementarPrecios(Familia familia, double porcentaje) {
-		// TODO Auto-generated method stub
-		
+	
+		PRODUCTOS_DB.values().stream()
+			.filter(producto -> producto.getFamilia().equals(familia))
+			.forEach(producto -> {
+				double precio = producto.getPrecio();
+				double nuevoPrecio = precio + (precio * porcentaje) / 100;
+				producto.setPrecio(nuevoPrecio);
+				PRODUCTOS_DB.replace(producto.getId(), producto);
+			});	
 	}
 
 	@Override
@@ -126,8 +154,6 @@ public class ProductoServicesDummyImpl implements ProductoServices {
 		
 	}
 
-	
-	
 	@Override
 	public Map<Familia, Integer> getEstadisticaNumeroProductosByFamilia() {
 		
@@ -147,11 +173,6 @@ public class ProductoServicesDummyImpl implements ProductoServices {
 		
 		return estadistica;
 	}
-
-	
-	
-	
-	
 	
 	@Override
 	public Map<Familia, Double> getEstadisticaPrecioMedioProductosByFamilia() {
