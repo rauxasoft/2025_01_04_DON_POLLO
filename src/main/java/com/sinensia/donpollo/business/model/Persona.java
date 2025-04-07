@@ -1,5 +1,7 @@
 package com.sinensia.donpollo.business.model;
 
+import java.util.Objects;
+
 public abstract class Persona {
 
 	private Long id;
@@ -69,7 +71,22 @@ public abstract class Persona {
 	public void setDatosContacto(DatosContacto datosContacto) {
 		this.datosContacto = datosContacto;
 	}
-	
-	
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		return Objects.equals(id, other.id);
+	}
+	
 }

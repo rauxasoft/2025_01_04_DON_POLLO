@@ -15,5 +15,5 @@ public class Cliente extends Persona {
 	public void setGold(boolean gold) {
 		this.gold = gold;
 	}
-	
+
 }

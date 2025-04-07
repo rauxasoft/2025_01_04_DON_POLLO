@@ -30,7 +30,7 @@ public class GestorCentralizadoExcepciones extends ResponseEntityExceptionHandle
 	@ExceptionHandler(BusinessException.class)
 	public ResponseEntity<Object> handleBusinessException(BusinessException ex){
 		
-		System.out.println("OJO! Problema aritmético"); // LOG
+		System.out.println("Se lanza una BusinessException"); // LOG
 		
 		return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
 	}
