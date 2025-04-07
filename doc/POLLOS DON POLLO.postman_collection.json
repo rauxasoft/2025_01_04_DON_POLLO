@@ -130,17 +130,27 @@
 			"name": "Productos",
 			"item": [
 				{
-					"name": "obtener todos",
+					"name": "obtener listados",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/productos",
+							"raw": "{{baseURL}}/productos?min=7&max=10",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"productos"
+							],
+							"query": [
+								{
+									"key": "min",
+									"value": "7"
+								},
+								{
+									"key": "max",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -197,7 +207,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Copa de Oban ACTUALIZADA!\",\r\n    \"fechaAlta\": \"2023-08-22T22:00:00.000+00:00\",\r\n    \"precio\": 5.0,\r\n    \"descripcion\": \"Delicioso whisky escocés con nuevo precio actualizado desde POSTMAN\",\r\n    \"familia\": {\r\n        \"id\": 10,\r\n        \"nombre\": \"LICORES\"\r\n    },\r\n    \"descatalogado\": false\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Pollo POSTMAN UPDATED\",\r\n    \"fechaAlta\": \"2023-08-22T22:00:00.000+00:00\",\r\n    \"precio\": 17.2,\r\n    \"descripcion\": \"Delicioso pollo POSTMAN UPDATED\",\r\n    \"familia\": {\r\n        \"id\": 100,\r\n        \"nombre\": \"COMIDAS\"\r\n    },\r\n    \"descatalogado\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

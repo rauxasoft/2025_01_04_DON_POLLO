@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,8 +32,18 @@ public class ProductoController {
 	}
 	
 	@GetMapping
-	public List<Producto> getAll(){
-		return productoServices.getAll();
+	public List<Producto> getProductos(@RequestParam(required = false) Double min, 
+									   @RequestParam(required = false) Double max) {
+		
+		List<Producto> productos = null;
+		
+		if(min == null || max == null) {
+			productos = productoServices.getAll();
+		} else {
+			productos = productoServices.getByPrecioBetween(min, max);
+		}
+		
+		return productos;
 	}
 	
 	@GetMapping("/{id}")

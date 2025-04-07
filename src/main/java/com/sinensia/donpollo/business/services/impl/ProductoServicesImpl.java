@@ -63,7 +63,7 @@ public class ProductoServicesImpl implements ProductoServices {
 	}
 
 	@Override
-	public List<Producto> getBetweenFechaAlta(Date desde, Date hasta) {
+	public List<Producto> getByFechaAltaBetween(Date desde, Date hasta) {
 		// TODO Auto-generated method stub
 		return null;
 	}

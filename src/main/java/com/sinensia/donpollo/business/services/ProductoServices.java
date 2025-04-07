@@ -35,7 +35,7 @@ public interface ProductoServices {
 	List<Producto> getByFamilia(Familia familia);
 	List<Producto> getByPrecioBetween(double min, double max);
 	List<Producto> getDescatalogados();
-	List<Producto> getBetweenFechaAlta(Date desde, Date hasta);
+	List<Producto> getByFechaAltaBetween(Date desde, Date hasta);
 	
 	int getNumeroTotalProductos();
 	

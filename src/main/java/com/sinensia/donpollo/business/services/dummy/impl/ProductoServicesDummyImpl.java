@@ -103,7 +103,7 @@ public class ProductoServicesDummyImpl implements ProductoServices {
 	}
 
 	@Override
-	public List<Producto> getBetweenFechaAlta(Date desde, Date hasta) {
+	public List<Producto> getByFechaAltaBetween(Date desde, Date hasta) {
 		
 		return PRODUCTOS_DB.values().stream()
 				.filter(producto -> producto.getFechaAlta().after(desde) && producto.getFechaAlta().before(hasta))
