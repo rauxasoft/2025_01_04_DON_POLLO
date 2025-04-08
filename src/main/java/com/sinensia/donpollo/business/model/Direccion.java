@@ -1,8 +1,14 @@
 package com.sinensia.donpollo.business.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Direccion {
 
+	@Column(name="DIRECCION")
 	private String via;
+	
 	private String poblacion;
 	private String codigoPostal;
 	private String provincia;

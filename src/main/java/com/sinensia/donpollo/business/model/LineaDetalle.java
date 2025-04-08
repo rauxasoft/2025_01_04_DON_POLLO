@@ -1,8 +1,16 @@
 package com.sinensia.donpollo.business.model;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Embeddable
 public class LineaDetalle {
 
+	@ManyToOne
+	@JoinColumn(name="CODIGO_PRODUCTO")
 	private Producto producto;
+	
 	private int cantidad;
 	private double precio;
 	

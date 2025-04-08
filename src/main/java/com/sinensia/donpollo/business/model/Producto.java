@@ -3,14 +3,35 @@ package com.sinensia.donpollo.business.model;
 import java.util.Date;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+@Entity
+@Table(name="PRODUCTOS")
 public class Producto {
 
+	@Id
+	@Column(name="CODIGO")
 	private Long id;
+	
 	private String nombre;
+	
+	@Temporal(TemporalType.DATE)
 	private Date fechaAlta;
+	
 	private double precio;
 	private String descripcion;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_FAMILIA")
 	private Familia familia;
+	
 	private boolean descatalogado;
 	
 	public Producto() {
