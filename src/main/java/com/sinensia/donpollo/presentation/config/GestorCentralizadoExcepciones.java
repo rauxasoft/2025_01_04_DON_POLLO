@@ -20,7 +20,7 @@ public class GestorCentralizadoExcepciones extends ResponseEntityExceptionHandle
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleException(Exception ex){
 		
-		System.out.println(ex); // LOG
+		System.out.println(ex); // TODO crear un LOG
 		
 		return ResponseEntity.internalServerError().body(new ErrorResponse("Algo ha ido mal..."));
 	}
@@ -30,7 +30,7 @@ public class GestorCentralizadoExcepciones extends ResponseEntityExceptionHandle
 	@ExceptionHandler(BusinessException.class)
 	public ResponseEntity<Object> handleBusinessException(BusinessException ex){
 		
-		System.out.println("Se lanza una BusinessException"); // LOG
+		System.out.println("Se lanza una BusinessException"); // TODO crear un LOG
 		
 		return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
 	}
