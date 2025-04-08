@@ -46,7 +46,7 @@ public class ClienteControllerTest extends AbstractControllerTest {
 											.andExpect(status().isOk())
 											.andReturn();
 		
-		testResponseBody(mvcResult, clientes);
+		assertResponseBodyIsOk(mvcResult, clientes);
 		
 	}
 	
@@ -59,7 +59,7 @@ public class ClienteControllerTest extends AbstractControllerTest {
 				.andExpect(status().isOk())
 				.andReturn();
 		
-		testResponseBody(mvcResult, cliente1);
+		assertResponseBodyIsOk(mvcResult, cliente1);
 		
 	}
 
@@ -72,7 +72,7 @@ public class ClienteControllerTest extends AbstractControllerTest {
 											.andExpect(status().isNotFound())
 											.andReturn();
 		
-		testResponseBody(mvcResult, new ErrorResponse("No existe el cliente 500"));
+		assertResponseBodyIsOk(mvcResult, new ErrorResponse("No existe el cliente 500"));
 		
 	}
 	
@@ -101,7 +101,7 @@ public class ClienteControllerTest extends AbstractControllerTest {
 											.andExpect(status().isBadRequest())
 											.andReturn();
 		
-		testResponseBody(mvcResult, new ErrorResponse("No se puede crear un cliente con id null"));
+		assertResponseBodyIsOk(mvcResult, new ErrorResponse("No se puede crear un cliente con id null"));
 		
 	}
 
@@ -118,7 +118,7 @@ public class ClienteControllerTest extends AbstractControllerTest {
 											.andExpect(status().isBadRequest())
 											.andReturn();
 		
-		testResponseBody(mvcResult, new ErrorResponse("Ya existe un cliente con el mismo nif"));
+		assertResponseBodyIsOk(mvcResult, new ErrorResponse("Ya existe un cliente con el mismo nif"));
 		
 	}
 	

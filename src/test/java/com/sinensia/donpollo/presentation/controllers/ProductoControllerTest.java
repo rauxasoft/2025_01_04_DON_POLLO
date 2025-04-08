@@ -47,7 +47,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 											.andExpect(status().isOk())
 											.andReturn();
 	
-		testResponseBody(mvcResult, productos);
+		assertResponseBodyIsOk(mvcResult, productos);
 		
 	}
 	
@@ -60,7 +60,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 				.andExpect(status().isOk())
 				.andReturn();
 		
-		testResponseBody(mvcResult, producto1);
+		assertResponseBodyIsOk(mvcResult, producto1);
 		
 	}
 
@@ -73,7 +73,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 											.andExpect(status().isNotFound())
 											.andReturn();
 		
-		testResponseBody(mvcResult, new ErrorResponse("No existe el producto 500"));
+		assertResponseBodyIsOk(mvcResult, new ErrorResponse("No existe el producto 500"));
 		
 	}
 	
@@ -102,7 +102,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 											.andExpect(status().isBadRequest())
 											.andReturn();
 		
-		testResponseBody(mvcResult, new ErrorResponse("No se puede crear un producto con id null"));
+		assertResponseBodyIsOk(mvcResult, new ErrorResponse("No se puede crear un producto con id null"));
 
 	}
 	

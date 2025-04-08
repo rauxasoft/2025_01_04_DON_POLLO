@@ -18,7 +18,7 @@ public abstract class AbstractControllerTest {
 	@Autowired
 	protected ObjectMapper objectMapper;
 	
-	protected void testResponseBody(MvcResult mvcResult, Object objeto) throws Exception {
+	protected void assertResponseBodyIsOk(MvcResult mvcResult, Object objeto) throws Exception {
 		
 		String responseBodyEsperado = objectMapper.writeValueAsString(objeto);
 		String responseBodyRecibido = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
