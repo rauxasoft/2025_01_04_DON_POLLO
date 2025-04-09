@@ -7,28 +7,58 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Familia;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
+import com.sinensia.donpollo.integration.repositories.ProductoRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ProductoServicesImpl implements ProductoServices {
 
+	private final ProductoRepository productoRepository;
+	
+	public ProductoServicesImpl(ProductoRepository productoRepository) {
+		this.productoRepository = productoRepository;
+	}
+	 
 	@Override
+	@Transactional
 	public Long create(Producto producto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if(producto.getId() != null) {
+			throw new BusinessException("Para crear un producto la id ha de ser null");
+		}
+		
+		Producto createdProducto = productoRepository.save(producto);
+		
+		return createdProducto.getId();
 	}
 
 	@Override
 	public Optional<Producto> read(Long idProducto) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return productoRepository.findById(idProducto);
 	}
 
 	@Override
+	@Transactional
 	public void update(Producto producto) {
-		// TODO Auto-generated method stub
+		
+		Long id = producto.getId();
+		
+		if(id == null) {
+			throw new BusinessException("La id del producto no puede ser null");
+		}
+		
+		boolean existe = productoRepository.existsById(id);
+		
+		if(!existe) {
+			throw new BusinessException("No existe el producto con id [" + id + "]");
+		}
+		
+		productoRepository.save(producto);
 		
 	}
 
@@ -40,8 +70,7 @@ public class ProductoServicesImpl implements ProductoServices {
 
 	@Override
 	public List<Producto> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoRepository.findAll();
 	}
 
 	@Override
@@ -70,8 +99,7 @@ public class ProductoServicesImpl implements ProductoServices {
 
 	@Override
 	public int getNumeroTotalProductos() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int) productoRepository.count();
 	}
 
 	@Override

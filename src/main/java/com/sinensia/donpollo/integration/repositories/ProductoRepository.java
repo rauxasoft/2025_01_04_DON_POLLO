@@ -6,4 +6,9 @@ import com.sinensia.donpollo.business.model.Producto;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
 
+
 }
+
+
+
+
