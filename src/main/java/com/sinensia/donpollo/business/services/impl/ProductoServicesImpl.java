@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.sinensia.donpollo.business.config.BusinessException;
@@ -63,8 +64,22 @@ public class ProductoServicesImpl implements ProductoServices {
 	}
 
 	@Override
+	@Transactional
 	public void delete(Long idProducto) {
-		// TODO Auto-generated method stub
+		
+		if(idProducto == null) {
+			throw new BusinessException("La id del producto no puede ser null");
+		}
+		
+		boolean existe = productoRepository.existsById(idProducto);
+		
+		if(!existe) {
+			throw new BusinessException("El producto [" + idProducto + "] no existe. No se puede eliminar.");
+		}
+		
+		Optional<Producto> optional = productoRepository.findById(idProducto);
+		
+		optional.get().setDescatalogado(true);
 		
 	}
 
@@ -75,26 +90,22 @@ public class ProductoServicesImpl implements ProductoServices {
 
 	@Override
 	public List<Producto> getByFamilia(Familia familia) {
-		// TODO Auto-generated method stub
-		return null;
+		return productoRepository.findByFamiliaId(familia.getId());
 	}
 
 	@Override
 	public List<Producto> getByPrecioBetween(double min, double max) {
-		// TODO Auto-generated method stub
-		return null;
+		return productoRepository.findByPrecioBetweenOrderByPrecio(min, max);
 	}
 
 	@Override
 	public List<Producto> getDescatalogados() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoRepository.findByDescatalogadoTrue();
 	}
 
 	@Override
 	public List<Producto> getByFechaAltaBetween(Date desde, Date hasta) {
-		// TODO Auto-generated method stub
-		return null;
+		return productoRepository.findByFechaAltaBetweenOrderByFechaAlta(desde, hasta);
 	}
 
 	@Override
@@ -104,8 +115,12 @@ public class ProductoServicesImpl implements ProductoServices {
 
 	@Override
 	public int getNumeroTotalProductosByFamilia(Familia familia) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		Producto ejemploProducto = new Producto();
+		ejemploProducto.setFamilia(familia);
+	
+		return (int) productoRepository.count(Example.of(ejemploProducto));
+		
 	}
 
 	@Override
