@@ -32,13 +32,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/establecimientos/100",
+							"raw": "{{baseURL}}/establecimientos/1",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"establecimientos",
-								"100"
+								"1"
 							]
 						}
 					},
@@ -77,7 +77,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"ESTABLECIMIENTO UPDATED\",\r\n    \"direccion\": {\r\n        \"via\": \"Avda. Monforte de Lemos, 36\",\r\n        \"poblacion\": \"Madrid\",\r\n        \"codigoPostal\": \"28029\",\r\n        \"provincia\": \"Madrid\",\r\n        \"pais\": \"España\"\r\n    },\r\n    \"datosContacto\": {\r\n        \"telefono1\": \"91 220 23 44\",\r\n        \"telefono2\": null,\r\n        \"email\": \"emailupdated@donpollo.com\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Gran Via 2 (UPDATED)\",\r\n    \"direccion\": {\r\n        \"via\": \"Gran Via de Les Corts Catalanes, 345\",\r\n        \"poblacion\": \"Barcelona\",\r\n        \"codigoPostal\": \"08034\",\r\n        \"provincia\": \"Barcelona\",\r\n        \"pais\": \"España\"\r\n    },\r\n    \"datosContacto\": {\r\n        \"telefono1\": \"+34 932247078\",\r\n        \"telefono2\": null,\r\n        \"email\": \"granvia2updated@pollosfelices.com\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -85,13 +85,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/establecimientos/100",
+							"raw": "{{baseURL}}/establecimientos/1",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"establecimientos",
-								"100"
+								"1"
 							]
 						}
 					},
@@ -112,13 +112,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/establecimientos/100",
+							"raw": "{{baseURL}}/establecimientos/1",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"establecimientos",
-								"100"
+								"1"
 							]
 						}
 					},
@@ -135,7 +135,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/productos?min=7&max=10",
+							"raw": "{{baseURL}}/productos",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -145,11 +145,13 @@
 							"query": [
 								{
 									"key": "min",
-									"value": "7"
+									"value": "0",
+									"disabled": true
 								},
 								{
 									"key": "max",
-									"value": "10"
+									"value": "10",
+									"disabled": true
 								}
 							]
 						}
@@ -181,7 +183,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Pollo POSTMAN\",\r\n    \"fechaAlta\": \"2023-08-22T22:00:00.000+00:00\",\r\n    \"precio\": 17.2,\r\n    \"descripcion\": \"Delicioso pollo POSTMAN\",\r\n    \"familia\": {\r\n        \"id\": 100,\r\n        \"nombre\": \"COMIDAS\"\r\n    },\r\n    \"descatalogado\": false\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Pollo POSTMAN\",\r\n    \"fechaAlta\": \"2023-08-22T22:00:00.000+00:00\",\r\n    \"precio\": 17.2,\r\n    \"descripcion\": \"Delicioso pollo POSTMAN\",\r\n    \"familia\": {\"id\": 5},\r\n    \"descatalogado\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -214,6 +216,24 @@
 								}
 							}
 						},
+						"url": {
+							"raw": "{{baseURL}}/productos/100",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"productos",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
 						"url": {
 							"raw": "{{baseURL}}/productos/100",
 							"host": [
@@ -266,6 +286,79 @@
 							],
 							"path": [
 								"dependientes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "obtener todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/clientes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nif\": \"34343434L\",\r\n    \"nombre\": \"Marta POSTMAN\",\r\n    \"apellido1\": \"Quesada\",\r\n    \"apellido2\": \"Olmos\",\r\n    \"direccion\": {\r\n        \"via\": \"c/Marina, 234 2º 1ª\",\r\n        \"poblacion\": \"Barcelona\",\r\n        \"codigoPostal\": \"08014\",\r\n        \"provincia\": \"Barcelona\",\r\n        \"pais\": \"España\"\r\n    },\r\n    \"datosContacto\": {\r\n        \"telefono1\": \"932318811\",\r\n        \"telefono2\": null,\r\n        \"email\": \"apax344@hotmail.com\"\r\n    },\r\n    \"gold\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/clientes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "obtener todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pedidos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pedidos"
 							]
 						}
 					},
