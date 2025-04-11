@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Establecimiento;
+import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO1;
+import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO2;
+import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3;
 import com.sinensia.donpollo.business.services.EstablecimientoServices;
 import com.sinensia.donpollo.integration.repositories.EstablecimientoRepository;
 
@@ -62,6 +65,45 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 	@Override
 	public List<Establecimiento> getAll() {
 		return establecimientoRepository.findAll();
+	}
+	
+	// *******************************************************
+	//
+	// DTOs
+	//
+	// *******************************************************
+
+	@Override
+	public List<EstablecimientoDTO1> getDTO1() {
+		
+		return establecimientoRepository.getDTO1().stream()
+				.map(x -> {
+					EstablecimientoDTO1 establecimientoDTO1 = new EstablecimientoDTO1();
+					establecimientoDTO1.setNombre((String) x[0]);
+					establecimientoDTO1.setTele1((String) x[1]);
+					establecimientoDTO1.setCodigoPostal((String) x[2]);
+					return establecimientoDTO1;
+				})
+				.toList();
+	}
+
+	@Override
+	public List<EstablecimientoDTO2> getDTO2() {
+		
+		return establecimientoRepository.getDTO2().stream()
+				.map(x -> {
+					String nombre = (String) x[0];
+					String provincia = (String) x[1];
+					String telefono = (String) x[2];
+					String email = (String) x[3];
+					return new EstablecimientoDTO2(nombre, provincia, telefono, email);
+				})
+				.toList();	
+	}
+
+	@Override
+	public List<EstablecimientoDTO3> getDTO3() {
+		return establecimientoRepository.getDTO3();
 	}
 
 }

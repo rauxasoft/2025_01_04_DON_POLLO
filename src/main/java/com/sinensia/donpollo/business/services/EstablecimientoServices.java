@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import com.sinensia.donpollo.business.model.Establecimiento;
+import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO1;
+import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO2;
+import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3;
 
 public interface EstablecimientoServices {
 
@@ -23,4 +26,16 @@ public interface EstablecimientoServices {
 	
 	List<Establecimiento> getAll();
 	
+	// *******************************************************
+	//
+	// DTOs
+	//
+	// *******************************************************
+	
+	List<EstablecimientoDTO1> getDTO1();
+	
+	List<EstablecimientoDTO2> getDTO2();
+	
+	List<EstablecimientoDTO3> getDTO3();
+		
 }

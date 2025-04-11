@@ -1,7 +1,6 @@
 package com.sinensia.donpollo.presentation.controllers;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -33,8 +33,21 @@ public class EstablecimientoController {
 	}
 
 	@GetMapping
-	public List<Establecimiento> getAll(){
-		return establecimientoServices.getAll();
+	public ResponseEntity<?> getAll(@RequestParam(required = false, defaultValue = "ALL") String view){
+		
+		Object respuesta = null;
+		
+		view = view.toUpperCase();
+		
+		switch(view) {
+			case "DTO1": respuesta = establecimientoServices.getDTO1(); break;
+			case "DTO2": respuesta = establecimientoServices.getDTO2(); break;
+			case "DTO3": respuesta = establecimientoServices.getDTO3(); break;
+			case "ALL":  respuesta = establecimientoServices.getAll(); break;
+			default:     respuesta = establecimientoServices.getAll(); break;
+		}
+		
+		return ResponseEntity.ok(respuesta);
 	}
 	
 	@GetMapping("/{id}")
