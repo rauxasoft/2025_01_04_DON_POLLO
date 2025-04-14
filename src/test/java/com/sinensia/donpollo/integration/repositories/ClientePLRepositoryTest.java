@@ -10,10 +10,10 @@ import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 @Sql(scripts= {"/data/h2/schema_testing.sql", "/data/h2/data_testing.sql"})
-public class ClienteRepositoryTest {
+public class ClientePLRepositoryTest {
 
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private ClientePLRepository clienteRepository;
 	
 	@Test
 	void existsByNifTest() {

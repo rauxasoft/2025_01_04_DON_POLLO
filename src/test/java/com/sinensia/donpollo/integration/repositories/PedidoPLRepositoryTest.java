@@ -12,19 +12,19 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.sinensia.donpollo.business.model.EstadoPedido;
-import com.sinensia.donpollo.business.model.Pedido;
+import com.sinensia.donpollo.integration.model.PedidoPL;
 
 @DataJpaTest
 @Sql(scripts= {"/data/h2/schema_testing.sql", "/data/h2/data_testing.sql"})
-public class PedidoRepositoryTest {
+public class PedidoPLRepositoryTest {
 
 	@Autowired
-	PedidoRepository pedidoRepository;
+	PedidoPLRepository pedidoPLRepository;
 	
 	@Test
 	void findByEstablecimientoIdTest() {
 		
-		List<Pedido> resultado = pedidoRepository.findByEstablecimientoId(1L);
+		List<PedidoPL> resultado = pedidoPLRepository.findByEstablecimientoId(1L);
 		
 		assertTrue(resultado.size() == 11);
 	}
@@ -37,7 +37,7 @@ public class PedidoRepositoryTest {
         Date desde = formato.parse("17/04/2023 09:10:00");
         Date hasta = formato.parse("17/04/2023 09:40:00");
         
-        List<Pedido> resultado = pedidoRepository.findByFechaHoraBetweenOrderByFechaHora(desde, hasta);
+        List<PedidoPL> resultado = pedidoPLRepository.findByFechaHoraBetweenOrderByFechaHora(desde, hasta);
         
         assertTrue(resultado.size() == 6);
         
@@ -51,7 +51,7 @@ public class PedidoRepositoryTest {
         Date desde = formato.parse("17/04/2023 08:10:00");
         Date hasta = formato.parse("17/04/2023 09:01:41");
         
-        List<Pedido> resultado = pedidoRepository.findByFechaHoraBetweenOrderByFechaHora(desde, hasta);
+        List<PedidoPL> resultado = pedidoPLRepository.findByFechaHoraBetweenOrderByFechaHora(desde, hasta);
         
         assertTrue(resultado.isEmpty());
 
@@ -59,7 +59,7 @@ public class PedidoRepositoryTest {
 	
 	@Test
 	void getDTO1Test() {
-		List<Object[]> resultado = pedidoRepository.getDTO1();
+		List<Object[]> resultado = pedidoPLRepository.getDTO1();
 		Object[] primerResultado = resultado.get(0);
 		
 		Long numeroPedido = (Long) primerResultado[0];

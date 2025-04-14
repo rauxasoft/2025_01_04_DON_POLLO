@@ -14,10 +14,10 @@ import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3;
 
 @DataJpaTest
 @Sql(scripts= {"/data/h2/schema_testing.sql", "/data/h2/data_testing.sql"})
-public class EstablecimientoRepositoryTest {
+public class EstablecimientoPLRepositoryTest {
 	
 	@Autowired
-	EstablecimientoRepository establecimientoRepository;
+	EstablecimientoPLRepository establecimientoRepository;
 	
 	@Test
 	void getDTO1Test() {

@@ -13,7 +13,7 @@ import com.sinensia.donpollo.business.model.EstadoPedido;
 import com.sinensia.donpollo.business.model.Pedido;
 import com.sinensia.donpollo.business.model.dtos.PedidoDTO1;
 import com.sinensia.donpollo.business.services.PedidoServices;
-import com.sinensia.donpollo.integration.repositories.PedidoRepository;
+import com.sinensia.donpollo.integration.repositories.PedidoPLRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -23,10 +23,10 @@ public class PedidoServicesImpl implements PedidoServices{
 	private SimpleDateFormat formateadorFecha = new SimpleDateFormat("dd/MM/yyyy");
 	private SimpleDateFormat formateadorHora = new SimpleDateFormat("HH:mm");
 	
-	private final PedidoRepository pedidoRepository;
+	private final PedidoPLRepository pedidoPLRepository;
 	
-	public PedidoServicesImpl(PedidoRepository pedidoRepository) {
-		this.pedidoRepository = pedidoRepository;
+	public PedidoServicesImpl(PedidoPLRepository pedidoRepository) {
+		this.pedidoPLRepository = pedidoRepository;
 	}
 	
 	@Override
@@ -37,12 +37,12 @@ public class PedidoServicesImpl implements PedidoServices{
 			throw new BusinessException("Para crear un pedido la id ha de ser null");
 		}
 		
-		return pedidoRepository.save(pedido).getId();
+		return pedidoPLRepository.save(pedido).getId();
 	}
 
 	@Override
 	public Optional<Pedido> read(Long idPedido) {
-		return pedidoRepository.findById(idPedido);
+		return pedidoPLRepository.findById(idPedido);
 	}
 
 	@Override
@@ -55,14 +55,14 @@ public class PedidoServicesImpl implements PedidoServices{
 			throw new BusinessException("La id del pedido no puede ser null");
 		}
 		
-		boolean existe = pedidoRepository.existsById(id);
+		boolean existe = pedidoPLRepository.existsById(id);
 		
 		if(!existe) {
 			throw new BusinessException("No existe el pedido con id [\" + id + \"]");
 		}
 		
 		EstadoPedido estadoNuevo = pedido.getEstado();
-		EstadoPedido estadoAnterior =pedidoRepository.findById(id).get().getEstado();
+		EstadoPedido estadoAnterior =pedidoPLRepository.findById(id).get().getEstado();
 		
 		if(estadoAnterior.equals(EstadoPedido.CANCELADO) && !estadoNuevo.equals(EstadoPedido.CANCELADO)) {
 			throw new IllegalStateException("CANCELADO es un estado final.");
@@ -71,27 +71,27 @@ public class PedidoServicesImpl implements PedidoServices{
 		// TODO
 		
 		
-		pedidoRepository.save(pedido);
+		pedidoPLRepository.save(pedido);
 	}
 
 	@Override
 	public List<Pedido> getAll() {
-		return pedidoRepository.findAll();
+		return pedidoPLRepository.findAll();
 	}
 
 	@Override
 	public List<Pedido> getByIdEstablecimiento(Long idEstablecimiento) {	
-		return pedidoRepository.findByEstablecimientoId(idEstablecimiento);
+		return pedidoPLRepository.findByEstablecimientoId(idEstablecimiento);
 	}
 
 	@Override
 	public List<Pedido> getBetweenFechas(Date desde, Date hasta) {
-		return pedidoRepository.findByFechaHoraBetweenOrderByFechaHora(desde, hasta);
+		return pedidoPLRepository.findByFechaHoraBetweenOrderByFechaHora(desde, hasta);
 	}
 
 	@Override
 	public int getNumeroTotalPedidos() {
-		return (int) pedidoRepository.count();
+		return (int) pedidoPLRepository.count();
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class PedidoServicesImpl implements PedidoServices{
 	@Override
 	public List<PedidoDTO1> getDTO1() {
 		
-		return pedidoRepository.getDTO1().stream()
+		return pedidoPLRepository.getDTO1().stream()
 				.map(fila -> {
 					
 					int id = ((Long) fila[0]).intValue();

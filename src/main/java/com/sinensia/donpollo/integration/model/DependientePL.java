@@ -1,10 +1,15 @@
-package com.sinensia.donpollo.business.model;
+package com.sinensia.donpollo.integration.model;
 
-public class Dependiente extends Persona {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="EMPLEADOS")
+public class DependientePL extends PersonaPL {
 
 	private String licenciaManipuladorAlimentos;
 	
-	public Dependiente() {
+	public DependientePL() {
 		
 	}
 	

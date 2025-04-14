@@ -1,14 +1,20 @@
-package com.sinensia.donpollo.business.model;
+package com.sinensia.donpollo.integration.model;
 
-public class Direccion {
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
+public class DireccionPL {
+
+	@Column(name="DIRECCION")
 	private String via;
+	
 	private String poblacion;
 	private String codigoPostal;
 	private String provincia;
 	private String pais;
 	
-	public Direccion() {
+	public DireccionPL() {
 		
 	}
 

@@ -14,19 +14,19 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.sinensia.donpollo.business.model.Familia;
-import com.sinensia.donpollo.business.model.Producto;
+import com.sinensia.donpollo.integration.model.ProductoPL;
 
 @DataJpaTest
 @Sql(scripts= {"/data/h2/schema_testing.sql", "/data/h2/data_testing.sql"})
-public class ProductoRepositoryTest {
+public class ProductoPLRepositoryTest {
 	
 	@Autowired
-	ProductoRepository productoRepository;
+	ProductoPLRepository productoPLRepository;
 	
 	@Test
 	void findByFamiliaIdTest() {
 		
-		List<Producto> resultado = productoRepository.findByFamiliaId(1L);
+		List<ProductoPL> resultado = productoPLRepository.findByFamiliaId(1L);
 		
 		assertTrue(resultado.size() == 6);
 		
@@ -35,7 +35,7 @@ public class ProductoRepositoryTest {
 	@Test
 	void findByPrecioBetweenOrderByPrecioTest() {
 		
-		List<Producto> resultado = productoRepository.findByPrecioBetweenOrderByPrecio(5, 10);
+		List<ProductoPL> resultado = productoPLRepository.findByPrecioBetweenOrderByPrecio(5, 10);
 		
 		assertTrue(resultado.size() == 17);
 		
@@ -44,7 +44,7 @@ public class ProductoRepositoryTest {
 	@Test
 	void findByDescatalogadoTrueTest() throws Exception {
 		
-		List<Producto> resultado = productoRepository.findByDescatalogadoTrue();
+		List<ProductoPL> resultado = productoPLRepository.findByDescatalogadoTrue();
 		
 		assertTrue(resultado.size() == 1);
 		
@@ -58,7 +58,7 @@ public class ProductoRepositoryTest {
         Date desde = formato.parse("19/10/2017 09:10:00");
         Date hasta = formato.parse("28/10/2017 09:40:00");
         
-        List<Producto> resultado = productoRepository.findByFechaAltaBetweenOrderByFechaAlta(desde, hasta);
+        List<ProductoPL> resultado = productoPLRepository.findByFechaAltaBetweenOrderByFechaAlta(desde, hasta);
 		
         assertTrue(resultado.size() == 58);
 	}
@@ -66,7 +66,7 @@ public class ProductoRepositoryTest {
 	@Test
 	void getDTO1Test() {
 		
-		Object[] resultado = productoRepository.getDTO1().get(0);
+		Object[] resultado = productoPLRepository.getDTO1().get(0);
 		
 		String nombre = (String) resultado[0];
 		double precio = (Double) resultado[1];
@@ -80,7 +80,7 @@ public class ProductoRepositoryTest {
 		
 		// TODO
 		
-		List<Object[]> resultados = productoRepository.getDTO2();
+		List<Object[]> resultados = productoPLRepository.getDTO2();
 		
 		Object[] resultado1 = resultados.get(0);
 		
@@ -105,9 +105,9 @@ public class ProductoRepositoryTest {
 		
 		Familia familia = new Familia();
 		familia.setId(4L);
-		productoRepository.updatePrecios(familia, 10);
+		productoPLRepository.updatePrecios(familia, 10);
 		
-		assertTrue(productoRepository.findById(100L).get().getPrecio() == 6.6);
+		assertTrue(productoPLRepository.findById(100L).get().getPrecio() == 6.6);
 		
 	}
 	
@@ -115,10 +115,10 @@ public class ProductoRepositoryTest {
 	void updatePreciosArrayIdsTest() {
 		
 		Long[] ids = {100L};
-		productoRepository.updatePrecios(ids, 10.0);
+		productoPLRepository.updatePrecios(ids, 10.0);
 		
-		Double precioActualizado = productoRepository.findById(100L).get().getPrecio();
-		Double precioNoActualizado = productoRepository.findById(101L).get().getPrecio();
+		Double precioActualizado = productoPLRepository.findById(100L).get().getPrecio();
+		Double precioNoActualizado = productoPLRepository.findById(101L).get().getPrecio();
 		
 		assertEquals(6.6, precioActualizado);
 		assertEquals(9.0, precioNoActualizado);
@@ -128,14 +128,14 @@ public class ProductoRepositoryTest {
 	@Test
 	void updatePreciosProductListTest() {
 		
-		Producto producto = new Producto();
+		ProductoPL producto = new ProductoPL();
 		producto.setId(100L);
 		
-		List<Producto> productos = new ArrayList<>();
+		List<ProductoPL> productos = new ArrayList<>();
 		productos.add(producto);
-		productoRepository.updatePrecios(productos, 10);
+		productoPLRepository.updatePrecios(productos, 10);
 		
-		assertTrue(productoRepository.findById(100L).get().getPrecio() == 6.6);
+		assertTrue(productoPLRepository.findById(100L).get().getPrecio() == 6.6);
 		
 	}
 

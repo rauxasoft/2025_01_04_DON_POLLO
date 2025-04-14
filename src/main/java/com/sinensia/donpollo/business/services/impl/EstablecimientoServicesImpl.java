@@ -11,17 +11,17 @@ import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO1;
 import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO2;
 import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3;
 import com.sinensia.donpollo.business.services.EstablecimientoServices;
-import com.sinensia.donpollo.integration.repositories.EstablecimientoRepository;
+import com.sinensia.donpollo.integration.repositories.EstablecimientoPLRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class EstablecimientoServicesImpl implements EstablecimientoServices {
 
-	private final EstablecimientoRepository establecimientoRepository;
+	private final EstablecimientoPLRepository establecimientoPLRepository;
 	
-	public EstablecimientoServicesImpl(EstablecimientoRepository establecimientoRepositor) {
-		this.establecimientoRepository = establecimientoRepositor;
+	public EstablecimientoServicesImpl(EstablecimientoPLRepository establecimientoRepositor) {
+		this.establecimientoPLRepository = establecimientoRepositor;
 	}
 	
 	@Override
@@ -32,14 +32,14 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 			throw new BusinessException("Para crear un establecimiento la id ha de ser null");
 		}
 		
-		Establecimiento createdEstablecimiento = establecimientoRepository.save(establecimiento);
+		Establecimiento createdEstablecimiento = establecimientoPLRepository.save(establecimiento);
 		
 		return createdEstablecimiento.getId();
 	}
 
 	@Override
 	public Optional<Establecimiento> read(Long idEstablecimiento) {
-		return establecimientoRepository.findById(idEstablecimiento);
+		return establecimientoPLRepository.findById(idEstablecimiento);
 	}
 
 	@Override
@@ -52,19 +52,19 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 			throw new BusinessException("La id de establecimiento no puede ser null");
 		}
 		
-		boolean existe = establecimientoRepository.existsById(id);
+		boolean existe = establecimientoPLRepository.existsById(id);
 		
 		if(!existe) {
 			throw new BusinessException("No existe el establecimiento con id [" + id + "]");
 		}
 		
-		establecimientoRepository.save(establecimiento);
+		establecimientoPLRepository.save(establecimiento);
 		
 	}
 
 	@Override
 	public List<Establecimiento> getAll() {
-		return establecimientoRepository.findAll();
+		return establecimientoPLRepository.findAll();
 	}
 	
 	// *******************************************************
@@ -76,7 +76,7 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 	@Override
 	public List<EstablecimientoDTO1> getDTO1() {
 		
-		return establecimientoRepository.getDTO1().stream()
+		return establecimientoPLRepository.getDTO1().stream()
 				.map(fila -> {
 					EstablecimientoDTO1 establecimientoDTO1 = new EstablecimientoDTO1();
 					establecimientoDTO1.setNombre((String) fila[0]);
@@ -90,7 +90,7 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 	@Override
 	public List<EstablecimientoDTO2> getDTO2() {
 		
-		return establecimientoRepository.getDTO2().stream()
+		return establecimientoPLRepository.getDTO2().stream()
 				.map(fila -> {
 					String nombre = (String) fila[0];
 					String provincia = (String) fila[1];
@@ -103,7 +103,7 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 
 	@Override
 	public List<EstablecimientoDTO3> getDTO3() {
-		return establecimientoRepository.getDTO3();
+		return establecimientoPLRepository.getDTO3();
 	}
 
 }

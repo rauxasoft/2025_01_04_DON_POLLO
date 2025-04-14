@@ -1,12 +1,20 @@
-package com.sinensia.donpollo.business.model;
+package com.sinensia.donpollo.integration.model;
 
-public class DatosContacto {
-	
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
+@Embeddable
+public class DatosContactoPL {
+
+	@Column(name="TELEFONO")
 	private String telefono1;
+	
+	@Column(name="MOVIL")
 	private String telefono2;
+	
 	private String email;
 	
-	public DatosContacto() {
+	public DatosContactoPL() {
 		
 	}
 

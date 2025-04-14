@@ -8,22 +8,22 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.sinensia.donpollo.business.model.Familia;
-import com.sinensia.donpollo.business.model.Producto;
+import com.sinensia.donpollo.integration.model.ProductoPL;
 
-public interface ProductoRepository extends JpaRepository<Producto, Long> {
+public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
 
-	List<Producto> findByFamiliaId(Long idFamilia);
+	List<ProductoPL> findByFamiliaId(Long idFamilia);
 	
-	List<Producto> findByPrecioBetweenOrderByPrecio(double min, double max);
+	List<ProductoPL> findByPrecioBetweenOrderByPrecio(double min, double max);
 	
-	List<Producto> findByDescatalogadoTrue();
+	List<ProductoPL> findByDescatalogadoTrue();
 	
-	List<Producto> findByFechaAltaBetweenOrderByFechaAlta(Date desde, Date hasta);
+	List<ProductoPL> findByFechaAltaBetweenOrderByFechaAlta(Date desde, Date hasta);
 
 	@Query("""
 			
 			SELECT UPPER(CONCAT(p.nombre, ' [',  p.familia.nombre, ']')), p.precio
-				FROM Producto p
+				FROM ProductoPL p
 			
 			""")
 	List<Object[]> getDTO1();
@@ -40,14 +40,14 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 			     			ELSE CONCAT(SUBSTRING(p.descripcion, 1, 22), '...') 
 			 			END
 			 	END		
-				FROM Producto p
+				FROM ProductoPL p
 			
 			""")
 	List<Object[]> getDTO2();
 
 	@Modifying
 	@Query("""
-			UPDATE Producto p
+			UPDATE ProductoPL p
 			   SET p.precio = p.precio + (p.precio * :incremental) / 100 
 			WHERE p.familia = :familia
 			""")
@@ -55,7 +55,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 	
 	@Modifying
 	@Query("""
-			UPDATE Producto p
+			UPDATE ProductoPL p
 			   SET p.precio = p.precio + (p.precio * :incremental) / 100 
 			 WHERE p.id IN :productos
 			""")
@@ -63,10 +63,10 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 	
 	@Modifying
 	@Query("""
-			UPDATE Producto p
+			UPDATE ProductoPL p
 			   SET p.precio = p.precio + (p.precio * :incremental) / 100 
 			 WHERE p IN :productos
 			""")
-	void updatePrecios(List<Producto> productos, double incremental);
+	void updatePrecios(List<ProductoPL> productos, double incremental);
 	
 }

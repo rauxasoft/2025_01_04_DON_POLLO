@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.sinensia.donpollo.business.model.Pedido;
+import com.sinensia.donpollo.integration.model.PedidoPL;
 
-public interface PedidoRepository extends JpaRepository<Pedido, Long>{
+public interface PedidoPLRepository extends JpaRepository<PedidoPL, Long>{
 
-	List<Pedido> findByEstablecimientoId(Long idEstablecimiento);
+	List<PedidoPL> findByEstablecimientoId(Long idEstablecimiento);
 
-	List<Pedido> findByFechaHoraBetweenOrderByFechaHora(Date desde, Date hasta);
+	List<PedidoPL> findByFechaHoraBetweenOrderByFechaHora(Date desde, Date hasta);
 	
 	@Query("""
 			
@@ -30,7 +30,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long>{
 			       					p.dependiente.nombre
 			       			)
 			       )
-			  FROM Pedido p
+			  FROM PedidoPL p
 			
 			""")
 	List<Object[]> getDTO1();
