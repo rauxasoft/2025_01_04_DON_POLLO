@@ -51,7 +51,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 			SET p.precio = p.precio + (SELECT AVG(p2.precio * :incremental) FROM Producto p2 WHERE p2.familia = :familia)
 			WHERE (p.familia = :familia)
 			""")
-	void UpdatePrecios(Familia familia, double incremental);
+	void updatePrecios(Familia familia, double incremental);
 	
 	@Modifying
 	@Query("""
@@ -59,7 +59,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 			SET p.precio = p.precio + (SELECT AVG(p2.precio * :incremental) FROM Producto p2 WHERE p2.familia = :familia)
 			WHERE (p.id IN :productos)
 			""")
-	void UpdatePrecios(Long[] productos, double incremental);
+	void updatePrecios(Long[] productos, double incremental);
 	
 	@Modifying
 	@Query("""
@@ -67,6 +67,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
 			SET p.precio = p.precio + (SELECT AVG(p2.precio * :incremental) FROM Producto p2 WHERE p2.familia = :familia)
 			WHERE (p IN :productos)
 			""")
-	void UpdatePrecios(List<Producto> productos, double incremental);
+	void updatePrecios(List<Producto> productos, double incremental);
 	
 }

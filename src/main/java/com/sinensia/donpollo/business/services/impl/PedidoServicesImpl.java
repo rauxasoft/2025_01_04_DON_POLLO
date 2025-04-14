@@ -1,5 +1,6 @@
 package com.sinensia.donpollo.business.services.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.EstadoPedido;
 import com.sinensia.donpollo.business.model.Pedido;
+import com.sinensia.donpollo.business.model.dtos.PedidoDTO1;
 import com.sinensia.donpollo.business.services.PedidoServices;
 import com.sinensia.donpollo.integration.repositories.PedidoRepository;
 
@@ -123,6 +125,35 @@ public class PedidoServicesImpl implements PedidoServices{
 	public Map<String, Integer> getEstadisticaNumeroPedidosByDependiente(Date desde, Date hasta) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	// *******************************************************
+	//
+	// DTOs
+	//
+	// *******************************************************
+	
+	@Override
+	public List<PedidoDTO1> getDTO1() {
+		
+		return pedidoRepository.getDTO1().stream()
+				.map(x -> {
+					Long numeroPedido = (Long) x[0];
+					String nomEstablecimiento = (String) x[1];
+					Date fecha = (Date) x[2];
+					EstadoPedido estado = (EstadoPedido) x[3];
+					String dependiente = (String) x[4];
+					
+					int id = Integer.parseInt(numeroPedido + "");
+					
+					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat formatter2 = new SimpleDateFormat("hh:mm");
+
+			        String formattedDate = formatter.format(fecha);
+			        String hora = formatter2.format(fecha);
+
+					return new PedidoDTO1(id, nomEstablecimiento, formattedDate, hora, estado.toString(), dependiente);
+				}).toList();
 	}
 
 }

@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.sinensia.donpollo.business.model.Pedido;
+import com.sinensia.donpollo.business.model.dtos.PedidoDTO1;
+
 
 public interface PedidoServices {
 
@@ -79,5 +81,13 @@ public interface PedidoServices {
 	 *
 	 */
 	Map<String, Integer> getEstadisticaNumeroPedidosByDependiente(Date desde, Date hasta);
+	
+	// *******************************************************
+	//
+	// DTOs
+	//
+	// *******************************************************
+	
+	List<PedidoDTO1> getDTO1();
 	
 }
