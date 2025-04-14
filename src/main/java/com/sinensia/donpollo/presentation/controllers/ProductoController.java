@@ -1,7 +1,6 @@
 package com.sinensia.donpollo.presentation.controllers;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -33,18 +32,33 @@ public class ProductoController {
 	}
 	
 	@GetMapping
-	public List<Producto> getProductos(@RequestParam(required = false) Double min, 
-									   @RequestParam(required = false) Double max) {
+	public ResponseEntity<?> getProductos(@RequestParam(required = false, defaultValue = "ALL") String view,
+										  @RequestParam(required = false) Double min, 
+										  @RequestParam(required = false) Double max) {
 		
-		List<Producto> productos = null;
+		Object respuesta = null;
 		
-		if(min == null || max == null) {
-			productos = productoServices.getAll();
-		} else {
-			productos = productoServices.getByPrecioBetween(min, max);
+		view = view.toUpperCase();
+		
+		switch(view) {
+			
+			case "DTO1": respuesta = productoServices.getDTO1(); break;
+			case "DTO2": respuesta = productoServices.getDTO2(); break;
+			case "ALL":  {
+				
+				if(min == null || max == null) {
+					respuesta = productoServices.getAll();
+				} else {
+					respuesta = productoServices.getByPrecioBetween(min, max);
+				}
+				
+				break;
+			}
+				
+			default:     respuesta = productoServices.getAll(); break;
 		}
 		
-		return productos;
+		return ResponseEntity.ok(respuesta);
 	}
 	
 	@GetMapping("/{id}")

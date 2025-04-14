@@ -20,16 +20,24 @@ public interface EstablecimientoRepository extends JpaRepository<Establecimiento
 	""")
 	List<Object[]> getDTO1();
 
-	@Query("SELECT e.nombre,                  "
-		 + "       e.direccion.provincia,     "
-		 + "       e.datosContacto.telefono1, "
-		 + "       e.datosContacto.email      "
-		 + "  FROM Establecimiento e          ")
+	@Query("""
+			
+			SELECT e.nombre,                  
+		           e.direccion.provincia,     
+		           e.datosContacto.telefono1, 
+		           e.datosContacto.email      
+		      FROM Establecimiento e
+		              
+	""")
 	List<Object[]> getDTO2();
 	
-	@Query("SELECT new com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3("
-		 + "          UPPER(e.nombre), "
-		 + "          UPPER(CONCAT(e.direccion.poblacion, ' [',e.direccion.provincia,'] - ', e.datosContacto.telefono1))) "
-		 + "  FROM Establecimiento e")
+	@Query("""
+			
+			SELECT new com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3(
+				          UPPER(e.nombre), 
+						  UPPER(CONCAT(e.direccion.poblacion, ' [', e.direccion.provincia,'] - ', e.datosContacto.telefono1))) 
+			  FROM Establecimiento e
+		 
+	""")
 	List<EstablecimientoDTO3> getDTO3();
 }

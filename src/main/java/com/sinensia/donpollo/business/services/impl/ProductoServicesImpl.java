@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Familia;
 import com.sinensia.donpollo.business.model.Producto;
+import com.sinensia.donpollo.business.model.dtos.ProductoDTO1;
+import com.sinensia.donpollo.business.model.dtos.ProductoDTO2;
 import com.sinensia.donpollo.business.services.ProductoServices;
 import com.sinensia.donpollo.integration.repositories.ProductoRepository;
 
@@ -151,6 +153,32 @@ public class ProductoServicesImpl implements ProductoServices {
 	public Map<Familia, Double> getEstadisticaPrecioMedioProductosByFamilia() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	// *******************************************************
+	//
+	// DTOs
+	//
+	// *******************************************************
+
+	@Override
+	public List<ProductoDTO1> getDTO1() {
+		return productoRepository.getDTO1().stream()
+				.map(fila -> {
+					String nombre = (String) fila[0];
+					Double precio = (Double) fila[1];	
+					return new ProductoDTO1(nombre, precio);
+				}).toList();
+	}
+
+	@Override
+	public List<ProductoDTO2> getDTO2() {
+		return productoRepository.getDTO2().stream()
+				.map(fila -> {
+					String nombre = (String) fila[0];
+					String descripcion = (String) fila[1];	
+					return new ProductoDTO2(nombre, descripcion);
+				}).toList();
 	}
 	
 }

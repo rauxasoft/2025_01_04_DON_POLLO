@@ -77,11 +77,11 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 	public List<EstablecimientoDTO1> getDTO1() {
 		
 		return establecimientoRepository.getDTO1().stream()
-				.map(x -> {
+				.map(fila -> {
 					EstablecimientoDTO1 establecimientoDTO1 = new EstablecimientoDTO1();
-					establecimientoDTO1.setNombre((String) x[0]);
-					establecimientoDTO1.setTele1((String) x[1]);
-					establecimientoDTO1.setCodigoPostal((String) x[2]);
+					establecimientoDTO1.setNombre((String) fila[0]);
+					establecimientoDTO1.setTele1((String) fila[1]);
+					establecimientoDTO1.setCodigoPostal((String) fila[2]);
 					return establecimientoDTO1;
 				})
 				.toList();
@@ -91,11 +91,11 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 	public List<EstablecimientoDTO2> getDTO2() {
 		
 		return establecimientoRepository.getDTO2().stream()
-				.map(x -> {
-					String nombre = (String) x[0];
-					String provincia = (String) x[1];
-					String telefono = (String) x[2];
-					String email = (String) x[3];
+				.map(fila -> {
+					String nombre = (String) fila[0];
+					String provincia = (String) fila[1];
+					String telefono = (String) fila[2];
+					String email = (String) fila[3];
 					return new EstablecimientoDTO2(nombre, provincia, telefono, email);
 				})
 				.toList();	
