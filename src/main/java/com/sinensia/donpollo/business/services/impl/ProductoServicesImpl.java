@@ -126,21 +126,29 @@ public class ProductoServicesImpl implements ProductoServices {
 	}
 
 	@Override
+	@Transactional
 	public void incrementarPrecios(Familia familia, double porcentaje) {
-		// TODO Auto-generated method stub
+		productoRepository.updatePrecios(familia, porcentaje);
 		
 	}
 
 	@Override
+	@Transactional
 	public void incrementarPrecios(List<Producto> productos, double porcentaje) {
-		// TODO Auto-generated method stub
+		
+		// TODO Buscar solición para esto!
+		
+		Long[] ids = {};
+		
+		productoRepository.updatePrecios(ids , porcentaje);	
+		
 		
 	}
 
 	@Override
+	@Transactional
 	public void incrementarPrecios(Long[] idsProducto, double porcentaje) {
-		// TODO Auto-generated method stub
-		
+		productoRepository.updatePrecios(idsProducto, porcentaje);	
 	}
 
 	@Override

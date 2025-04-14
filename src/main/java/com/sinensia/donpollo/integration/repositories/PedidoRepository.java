@@ -13,16 +13,26 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long>{
 	List<Pedido> findByEstablecimientoId(Long idEstablecimiento);
 
 	List<Pedido> findByFechaHoraBetweenOrderByFechaHora(Date desde, Date hasta);
-
+	
 	@Query("""
 			
 			SELECT p.id, 
 			       UPPER(p.establecimiento.nombre), 
 			       p.fechaHora, 
 			       p.estado,
-			       UPPER(CONCAT(p.dependiente.apellido1, ' ',p.dependiente.apellido2, ', ', p.dependiente.nombre))
+			       UPPER(
+			       			CONCAT(
+			       					p.dependiente.apellido1, 
+			       					CASE
+			       						WHEN p.dependiente.apellido2 IS NOT NULL THEN CONCAT (' ', p.dependiente.apellido2, ', ')
+			       						ELSE ', '
+			       					END,
+			       					p.dependiente.nombre
+			       			)
+			       )
 			  FROM Pedido p
 			
 			""")
 	List<Object[]> getDTO1();
+	
 }

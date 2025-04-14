@@ -20,6 +20,9 @@ import jakarta.transaction.Transactional;
 @Service
 public class PedidoServicesImpl implements PedidoServices{
 
+	private SimpleDateFormat formateadorFecha = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat formateadorHora = new SimpleDateFormat("HH:mm");
+	
 	private final PedidoRepository pedidoRepository;
 	
 	public PedidoServicesImpl(PedidoRepository pedidoRepository) {
@@ -137,23 +140,18 @@ public class PedidoServicesImpl implements PedidoServices{
 	public List<PedidoDTO1> getDTO1() {
 		
 		return pedidoRepository.getDTO1().stream()
-				.map(x -> {
-					Long numeroPedido = (Long) x[0];
-					String nomEstablecimiento = (String) x[1];
-					Date fecha = (Date) x[2];
-					EstadoPedido estado = (EstadoPedido) x[3];
-					String dependiente = (String) x[4];
+				.map(fila -> {
 					
-					int id = Integer.parseInt(numeroPedido + "");
-					
-					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-					SimpleDateFormat formatter2 = new SimpleDateFormat("hh:mm");
+					int id = ((Long) fila[0]).intValue();
+					String nomEstablecimiento = (String) fila[1];
+					Date fecha = (Date) fila[2];
+					EstadoPedido estado = (EstadoPedido) fila[3];
+					String dependiente = (String) fila[4];
+			        String strFecha = formateadorFecha.format(fecha);
+			        String strHora = formateadorHora.format(fecha);
 
-			        String formattedDate = formatter.format(fecha);
-			        String hora = formatter2.format(fecha);
-
-					return new PedidoDTO1(id, nomEstablecimiento, formattedDate, hora, estado.toString(), dependiente);
+					return new PedidoDTO1(id, nomEstablecimiento, strFecha, strHora, estado.toString(), dependiente);
 				}).toList();
 	}
-
+	
 }

@@ -112,5 +112,5 @@ public class Producto {
 		Producto other = (Producto) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }
