@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import com.sinensia.donpollo.business.model.EstadoPedido;
+import com.sinensia.donpollo.integration.model.EstadoPedidoPL;
 import com.sinensia.donpollo.integration.model.PedidoPL;
 
 @DataJpaTest
@@ -65,7 +65,7 @@ public class PedidoPLRepositoryTest {
 		Long numeroPedido = (Long) primerResultado[0];
 		String nomEstablecimiento = (String) primerResultado[1];
 		Date fecha = (Date) primerResultado[2];
-		EstadoPedido estado = (EstadoPedido) primerResultado[3];
+		EstadoPedidoPL estado = (EstadoPedidoPL) primerResultado[3];
 		String dependiente = (String) primerResultado[4];
 		
         assertTrue(resultado.size() == 15);
@@ -73,7 +73,7 @@ public class PedidoPLRepositoryTest {
 		assertTrue(numeroPedido.equals(1000L));
 		assertTrue(nomEstablecimiento.equals("GRAN VIA 2"));
 		assertTrue(fecha.toString().equals("2023-04-17 09:01:42.069"));
-		assertTrue(estado.equals(EstadoPedido.ENTREGADO));
+		assertTrue(estado.equals(EstadoPedidoPL.ENTREGADO));
 		assertTrue(dependiente.equals("PEÑA OJEDA, JOSÉ RAMÓN"));
 	}
 }

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import com.sinensia.donpollo.business.model.Familia;
+import com.sinensia.donpollo.integration.model.FamiliaPL;
 import com.sinensia.donpollo.integration.model.ProductoPL;
 
 @DataJpaTest
@@ -103,9 +103,9 @@ public class ProductoPLRepositoryTest {
 	@Test
 	void updatePreciosFamiliaTest() {
 		
-		Familia familia = new Familia();
-		familia.setId(4L);
-		productoPLRepository.updatePrecios(familia, 10);
+		FamiliaPL familiaPL = new FamiliaPL();
+		familiaPL.setId(4L);
+		productoPLRepository.updatePrecios(familiaPL, 10);
 		
 		assertTrue(productoPLRepository.findById(100L).get().getPrecio() == 6.6);
 		

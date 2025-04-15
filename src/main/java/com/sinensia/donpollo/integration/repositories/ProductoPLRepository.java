@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import com.sinensia.donpollo.business.model.Familia;
+import com.sinensia.donpollo.integration.model.FamiliaPL;
 import com.sinensia.donpollo.integration.model.ProductoPL;
 
 public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
@@ -51,7 +51,7 @@ public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
 			   SET p.precio = p.precio + (p.precio * :incremental) / 100 
 			WHERE p.familia = :familia
 			""")
-	void updatePrecios(Familia familia, double incremental);
+	void updatePrecios(FamiliaPL familia, double incremental);
 	
 	@Modifying
 	@Query("""
