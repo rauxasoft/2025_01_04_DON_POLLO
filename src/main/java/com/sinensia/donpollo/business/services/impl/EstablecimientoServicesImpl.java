@@ -20,8 +20,8 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 
 	private final EstablecimientoPLRepository establecimientoPLRepository;
 	
-	public EstablecimientoServicesImpl(EstablecimientoPLRepository establecimientoRepositor) {
-		this.establecimientoPLRepository = establecimientoRepositor;
+	public EstablecimientoServicesImpl(EstablecimientoPLRepository establecimientoPLRepository) {
+		this.establecimientoPLRepository = establecimientoPLRepository;
 	}
 	
 	@Override
