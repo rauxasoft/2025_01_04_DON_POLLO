@@ -40,16 +40,17 @@ public class ClienteServicesImpl implements ClienteServices {
 		}
 		
 		ClientePL clientePL = mapper.map(cliente, ClientePL.class);
-		
-		ClientePL createdClientePL = clientePLRepository.save(clientePL);
-		
-		return createdClientePL.getId();
-		
+	
+		return clientePLRepository.save(clientePL).getId();
 	}
 
 	@Override
 	public Optional<Cliente> read(Long id) {
-		return clientePLRepository.findById(id);
+		
+		Optional<ClientePL> optionalPL = clientePLRepository.findById(id);
+		Cliente cliente = optionalPL.isPresent() ? mapper.map(optionalPL.get(), Cliente.class) : null;
+		
+		return Optional.ofNullable(cliente);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.sinensia.donpollo.business.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
 import com.sinensia.donpollo.business.config.BusinessException;
@@ -11,6 +12,7 @@ import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO1;
 import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO2;
 import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3;
 import com.sinensia.donpollo.business.services.EstablecimientoServices;
+import com.sinensia.donpollo.integration.model.EstablecimientoPL;
 import com.sinensia.donpollo.integration.repositories.EstablecimientoPLRepository;
 
 import jakarta.transaction.Transactional;
@@ -19,9 +21,11 @@ import jakarta.transaction.Transactional;
 public class EstablecimientoServicesImpl implements EstablecimientoServices {
 
 	private final EstablecimientoPLRepository establecimientoPLRepository;
+	private final DozerBeanMapper mapper;
 	
-	public EstablecimientoServicesImpl(EstablecimientoPLRepository establecimientoPLRepository) {
+	public EstablecimientoServicesImpl(EstablecimientoPLRepository establecimientoPLRepository, DozerBeanMapper mapper) {
 		this.establecimientoPLRepository = establecimientoPLRepository;
+		this.mapper = mapper;
 	}
 	
 	@Override
@@ -32,14 +36,18 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 			throw new BusinessException("Para crear un establecimiento la id ha de ser null");
 		}
 		
-		Establecimiento createdEstablecimiento = establecimientoPLRepository.save(establecimiento);
+		EstablecimientoPL establecimientoPL = mapper.map(establecimiento, EstablecimientoPL.class);
 		
-		return createdEstablecimiento.getId();
+		return establecimientoPLRepository.save(establecimientoPL).getId();
 	}
 
 	@Override
 	public Optional<Establecimiento> read(Long idEstablecimiento) {
-		return establecimientoPLRepository.findById(idEstablecimiento);
+		
+		Optional<EstablecimientoPL> optionalPL = establecimientoPLRepository.findById(idEstablecimiento);
+		Establecimiento establecimiento = optionalPL.isPresent() ? mapper.map(optionalPL.get(), Establecimiento.class) : null;
+		
+		return Optional.ofNullable(establecimiento);
 	}
 
 	@Override
@@ -58,13 +66,18 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 			throw new BusinessException("No existe el establecimiento con id [" + id + "]");
 		}
 		
-		establecimientoPLRepository.save(establecimiento);
+		EstablecimientoPL establecimientoPL = mapper.map(establecimiento, EstablecimientoPL.class);
+		
+		establecimientoPLRepository.save(establecimientoPL);
 		
 	}
 
 	@Override
 	public List<Establecimiento> getAll() {
-		return establecimientoPLRepository.findAll();
+		
+		return establecimientoPLRepository.findAll().stream()
+				.map(x -> mapper.map(x, Establecimiento.class))
+				.toList();
 	}
 	
 	// *******************************************************

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.model.dtos.ProductoDTO1;
 import com.sinensia.donpollo.business.model.dtos.ProductoDTO2;
 import com.sinensia.donpollo.business.services.ProductoServices;
+import com.sinensia.donpollo.integration.model.FamiliaPL;
+import com.sinensia.donpollo.integration.model.ProductoPL;
 import com.sinensia.donpollo.integration.repositories.ProductoPLRepository;
 
 import jakarta.transaction.Transactional;
@@ -22,9 +25,11 @@ import jakarta.transaction.Transactional;
 public class ProductoServicesImpl implements ProductoServices {
 
 	private final ProductoPLRepository productoPLRepository;
+	private final DozerBeanMapper mapper;
 	
-	public ProductoServicesImpl(ProductoPLRepository productoRepository) {
+	public ProductoServicesImpl(ProductoPLRepository productoRepository, DozerBeanMapper mapper) {
 		this.productoPLRepository = productoRepository;
+		this.mapper = mapper;
 	}
 	 
 	@Override
@@ -35,14 +40,19 @@ public class ProductoServicesImpl implements ProductoServices {
 			throw new BusinessException("Para crear un producto la id ha de ser null");
 		}
 		
-		Producto createdProducto = productoPLRepository.save(producto);
-		
-		return createdProducto.getId();
+		ProductoPL productoPL = mapper.map(producto, ProductoPL.class);
+	
+		return productoPLRepository.save(productoPL).getId();
 	}
 
 	@Override
 	public Optional<Producto> read(Long idProducto) {
-		return productoPLRepository.findById(idProducto);
+		
+		Optional<ProductoPL> optionalPL = productoPLRepository.findById(idProducto);
+		Producto producto = optionalPL.isPresent() ? mapper.map(optionalPL.get(), Producto.class) : null;
+		
+		return Optional.ofNullable(producto);
+		
 	}
 
 	@Override
@@ -61,7 +71,7 @@ public class ProductoServicesImpl implements ProductoServices {
 			throw new BusinessException("No existe el producto con id [" + id + "]");
 		}
 		
-		productoPLRepository.save(producto);
+		productoPLRepository.save(mapper.map(producto, ProductoPL.class));
 		
 	}
 
@@ -79,35 +89,35 @@ public class ProductoServicesImpl implements ProductoServices {
 			throw new BusinessException("El producto [" + idProducto + "] no existe. No se puede eliminar.");
 		}
 		
-		Optional<Producto> optional = productoPLRepository.findById(idProducto);
+		Optional<ProductoPL> optionalPL = productoPLRepository.findById(idProducto);
 		
-		optional.get().setDescatalogado(true);
+		optionalPL.get().setDescatalogado(true);
 		
 	}
 
 	@Override
 	public List<Producto> getAll() {
-		return productoPLRepository.findAll();
+		return convertListFromIntegrationToBusiness(productoPLRepository.findAll());
 	}
 
 	@Override
 	public List<Producto> getByFamilia(Familia familia) {
-		return productoPLRepository.findByFamiliaId(familia.getId());
+		return convertListFromIntegrationToBusiness(productoPLRepository.findByFamiliaId(familia.getId()));
 	}
 
 	@Override
 	public List<Producto> getByPrecioBetween(double min, double max) {
-		return productoPLRepository.findByPrecioBetweenOrderByPrecio(min, max);
+		return convertListFromIntegrationToBusiness(productoPLRepository.findByPrecioBetweenOrderByPrecio(min, max));
 	}
 
 	@Override
 	public List<Producto> getDescatalogados() {
-		return productoPLRepository.findByDescatalogadoTrue();
+		return convertListFromIntegrationToBusiness(productoPLRepository.findByDescatalogadoTrue());
 	}
 
 	@Override
 	public List<Producto> getByFechaAltaBetween(Date desde, Date hasta) {
-		return productoPLRepository.findByFechaAltaBetweenOrderByFechaAlta(desde, hasta);
+		return convertListFromIntegrationToBusiness(productoPLRepository.findByFechaAltaBetweenOrderByFechaAlta(desde, hasta));
 	}
 
 	@Override
@@ -118,17 +128,22 @@ public class ProductoServicesImpl implements ProductoServices {
 	@Override
 	public int getNumeroTotalProductosByFamilia(Familia familia) {
 		
-		Producto ejemploProducto = new Producto();
-		ejemploProducto.setFamilia(familia);
+		FamiliaPL familiaPL = mapper.map(familia, FamiliaPL.class);
+		
+		ProductoPL ejemploProductoPL = new ProductoPL();
+		ejemploProductoPL.setFamilia(familiaPL);
 	
-		return (int) productoPLRepository.count(Example.of(ejemploProducto));
+		return (int) productoPLRepository.count(Example.of(ejemploProductoPL));
 		
 	}
 
 	@Override
 	@Transactional
 	public void incrementarPrecios(Familia familia, double porcentaje) {
-		productoPLRepository.updatePrecios(familia, porcentaje);
+		
+		FamiliaPL familiaPL = mapper.map(familia, FamiliaPL.class);
+		
+		productoPLRepository.updatePrecios(familiaPL, porcentaje);
 		
 	}
 
@@ -187,6 +202,19 @@ public class ProductoServicesImpl implements ProductoServices {
 					String descripcion = (String) fila[1];	
 					return new ProductoDTO2(nombre, descripcion);
 				}).toList();
+	}
+	
+	// *******************************************************
+	//
+	// Private Methods
+	//
+	// *******************************************************	
+	
+	private List<Producto> convertListFromIntegrationToBusiness(List<ProductoPL> productosPL){
+		
+		return productosPL.stream()
+				.map(x -> mapper.map(x, Producto.class))
+				.toList();
 	}
 	
 }

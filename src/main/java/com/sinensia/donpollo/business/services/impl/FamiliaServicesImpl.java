@@ -32,7 +32,6 @@ public class FamiliaServicesImpl implements FamiliaServices {
 		}
 		
 		FamiliaPL familiaPL = mapper.map(familia, FamiliaPL.class);
-		
 		FamiliaPL createdFamiliaPL = familiaPLRepository.save(familiaPL);
 		
 		return createdFamiliaPL.getId();

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
 import com.sinensia.donpollo.business.config.BusinessException;
@@ -13,6 +14,7 @@ import com.sinensia.donpollo.business.model.EstadoPedido;
 import com.sinensia.donpollo.business.model.Pedido;
 import com.sinensia.donpollo.business.model.dtos.PedidoDTO1;
 import com.sinensia.donpollo.business.services.PedidoServices;
+import com.sinensia.donpollo.integration.model.PedidoPL;
 import com.sinensia.donpollo.integration.repositories.PedidoPLRepository;
 
 import jakarta.transaction.Transactional;
@@ -24,9 +26,11 @@ public class PedidoServicesImpl implements PedidoServices{
 	private SimpleDateFormat formateadorHora = new SimpleDateFormat("HH:mm");
 	
 	private final PedidoPLRepository pedidoPLRepository;
+	private final DozerBeanMapper mapper;
 	
-	public PedidoServicesImpl(PedidoPLRepository pedidoRepository) {
+	public PedidoServicesImpl(PedidoPLRepository pedidoRepository, DozerBeanMapper mapper) {
 		this.pedidoPLRepository = pedidoRepository;
+		this.mapper = mapper;
 	}
 	
 	@Override
@@ -37,12 +41,18 @@ public class PedidoServicesImpl implements PedidoServices{
 			throw new BusinessException("Para crear un pedido la id ha de ser null");
 		}
 		
-		return pedidoPLRepository.save(pedido).getId();
+		PedidoPL pedidoPL = mapper.map(pedido, PedidoPL.class);
+
+		return pedidoPLRepository.save(pedidoPL).getId();
 	}
 
 	@Override
 	public Optional<Pedido> read(Long idPedido) {
-		return pedidoPLRepository.findById(idPedido);
+		
+		Optional<PedidoPL> optionalPL = pedidoPLRepository.findById(idPedido);
+		Pedido pedido = optionalPL.isPresent() ? mapper.map(optionalPL.get(), Pedido.class) : null;
+		
+		return Optional.ofNullable(pedido);
 	}
 
 	@Override
@@ -58,9 +68,10 @@ public class PedidoServicesImpl implements PedidoServices{
 		boolean existe = pedidoPLRepository.existsById(id);
 		
 		if(!existe) {
-			throw new BusinessException("No existe el pedido con id [\" + id + \"]");
+			throw new BusinessException("No existe el pedido con id [" + id + "]");
 		}
 		
+		/*
 		EstadoPedido estadoNuevo = pedido.getEstado();
 		EstadoPedido estadoAnterior =pedidoPLRepository.findById(id).get().getEstado();
 		
@@ -68,25 +79,26 @@ public class PedidoServicesImpl implements PedidoServices{
 			throw new IllegalStateException("CANCELADO es un estado final.");
 		}
 		
-		// TODO
+		*/
 		
+		// TODO Comprobar validez de estados!
 		
-		pedidoPLRepository.save(pedido);
+		pedidoPLRepository.save(mapper.map(pedido, PedidoPL.class));
 	}
 
 	@Override
 	public List<Pedido> getAll() {
-		return pedidoPLRepository.findAll();
+		return convertListFromIntegrationToBusiness(pedidoPLRepository.findAll());
 	}
 
 	@Override
 	public List<Pedido> getByIdEstablecimiento(Long idEstablecimiento) {	
-		return pedidoPLRepository.findByEstablecimientoId(idEstablecimiento);
+		return convertListFromIntegrationToBusiness(pedidoPLRepository.findByEstablecimientoId(idEstablecimiento));
 	}
 
 	@Override
 	public List<Pedido> getBetweenFechas(Date desde, Date hasta) {
-		return pedidoPLRepository.findByFechaHoraBetweenOrderByFechaHora(desde, hasta);
+		return convertListFromIntegrationToBusiness(pedidoPLRepository.findByFechaHoraBetweenOrderByFechaHora(desde, hasta));
 	}
 
 	@Override
@@ -152,6 +164,19 @@ public class PedidoServicesImpl implements PedidoServices{
 
 					return new PedidoDTO1(id, nomEstablecimiento, strFecha, strHora, estado.toString(), dependiente);
 				}).toList();
+	}
+	
+	// *******************************************************
+	//
+	// Private Methods
+	//
+	// *******************************************************	
+	
+	private List<Pedido> convertListFromIntegrationToBusiness(List<PedidoPL> pedidosPL){
+		
+		return pedidosPL.stream()
+				.map(x -> mapper.map(x, Pedido.class))
+				.toList();
 	}
 	
 }
