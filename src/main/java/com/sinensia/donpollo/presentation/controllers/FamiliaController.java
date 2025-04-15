@@ -21,7 +21,6 @@ public class FamiliaController {
 	
 	@GetMapping
 	public List<Familia> getAll(){
-		
 		return familiaServices.getAll();
 	}
 

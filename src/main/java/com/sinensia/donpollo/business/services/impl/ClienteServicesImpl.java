@@ -3,11 +3,13 @@ package com.sinensia.donpollo.business.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Cliente;
 import com.sinensia.donpollo.business.services.ClienteServices;
+import com.sinensia.donpollo.integration.model.ClientePL;
 import com.sinensia.donpollo.integration.repositories.ClientePLRepository;
 
 import jakarta.transaction.Transactional;
@@ -16,9 +18,11 @@ import jakarta.transaction.Transactional;
 public class ClienteServicesImpl implements ClienteServices {
 
 	private final ClientePLRepository clientePLRepository;
+	private final DozerBeanMapper mapper;
 	
-	public ClienteServicesImpl(ClientePLRepository clienteRepository) {
+	public ClienteServicesImpl(ClientePLRepository clienteRepository, DozerBeanMapper mapper) {
 		this.clientePLRepository = clienteRepository;
+		this.mapper = mapper;
 	}
 	
 	@Override
@@ -35,9 +39,11 @@ public class ClienteServicesImpl implements ClienteServices {
 			throw new BusinessException("Ya existe un cliente con el NIF: " + cliente.getNif());
 		}
 		
-		Cliente createdCliente = clientePLRepository.save(cliente);
+		ClientePL clientePL = mapper.map(cliente, ClientePL.class);
 		
-		return createdCliente.getId();
+		ClientePL createdClientePL = clientePLRepository.save(clientePL);
+		
+		return createdClientePL.getId();
 		
 	}
 
@@ -48,7 +54,10 @@ public class ClienteServicesImpl implements ClienteServices {
 
 	@Override
 	public List<Cliente> getAll() {
-		return clientePLRepository.findAll();
+		
+		return clientePLRepository.findAll().stream()
+				.map(x -> mapper.map(x, Cliente.class))
+				.toList();
 	}
 
 }
