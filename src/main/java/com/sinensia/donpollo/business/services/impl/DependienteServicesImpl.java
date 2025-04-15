@@ -26,6 +26,7 @@ public class DependienteServicesImpl implements DependienteServices {
 		return dependientePLRepository.findAll().stream()
 				.map(x -> mapper.map(x, Dependiente.class))
 				.toList();
+				
 	}
 
 }
