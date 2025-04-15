@@ -44,10 +44,9 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 	@Override
 	public Optional<Establecimiento> read(Long idEstablecimiento) {
 		
-		Optional<EstablecimientoPL> optionalPL = establecimientoPLRepository.findById(idEstablecimiento);
-		Establecimiento establecimiento = optionalPL.isPresent() ? mapper.map(optionalPL.get(), Establecimiento.class) : null;
-		
-		return Optional.ofNullable(establecimiento);
+		return establecimientoPLRepository.findById(idEstablecimiento).stream()
+				.map(x -> mapper.map(x, Establecimiento.class))
+				.findAny();
 	}
 
 	@Override

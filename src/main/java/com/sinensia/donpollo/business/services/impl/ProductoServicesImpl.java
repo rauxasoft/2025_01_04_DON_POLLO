@@ -48,11 +48,9 @@ public class ProductoServicesImpl implements ProductoServices {
 	@Override
 	public Optional<Producto> read(Long idProducto) {
 		
-		Optional<ProductoPL> optionalPL = productoPLRepository.findById(idProducto);
-		Producto producto = optionalPL.isPresent() ? mapper.map(optionalPL.get(), Producto.class) : null;
-		
-		return Optional.ofNullable(producto);
-		
+		return productoPLRepository.findById(idProducto).stream()
+				.map(x -> mapper.map(x, Producto.class))
+				.findAny();
 	}
 
 	@Override

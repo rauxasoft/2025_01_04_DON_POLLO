@@ -47,10 +47,9 @@ public class ClienteServicesImpl implements ClienteServices {
 	@Override
 	public Optional<Cliente> read(Long id) {
 		
-		Optional<ClientePL> optionalPL = clientePLRepository.findById(id);
-		Cliente cliente = optionalPL.isPresent() ? mapper.map(optionalPL.get(), Cliente.class) : null;
-		
-		return Optional.ofNullable(cliente);
+		return clientePLRepository.findById(id).stream()
+				.map(x -> mapper.map(x, Cliente.class))
+				.findAny();
 	}
 
 	@Override

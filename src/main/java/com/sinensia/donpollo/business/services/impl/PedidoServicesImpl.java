@@ -49,10 +49,9 @@ public class PedidoServicesImpl implements PedidoServices{
 	@Override
 	public Optional<Pedido> read(Long idPedido) {
 		
-		Optional<PedidoPL> optionalPL = pedidoPLRepository.findById(idPedido);
-		Pedido pedido = optionalPL.isPresent() ? mapper.map(optionalPL.get(), Pedido.class) : null;
-		
-		return Optional.ofNullable(pedido);
+		return pedidoPLRepository.findById(idPedido).stream()
+				.map(x -> mapper.map(x, Pedido.class))
+				.findAny();
 	}
 
 	@Override
