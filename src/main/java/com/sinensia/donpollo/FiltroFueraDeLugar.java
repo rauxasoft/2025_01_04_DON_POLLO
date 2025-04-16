@@ -2,6 +2,7 @@ package com.sinensia.donpollo;
 
 import java.io.IOException;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.Filter;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 // 1
 @Component
+@Order(1)
 public class FiltroFueraDeLugar implements Filter {
 
 	@Override
@@ -26,10 +28,10 @@ public class FiltroFueraDeLugar implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 	
-		String method = request.getMethod();
-		String url = request.getRequestURI();
+	//	String method = request.getMethod();
+	//	String url = request.getRequestURI();
 	
-		
+		System.out.println("FILTRO 1 ENTRADA");
 		/*
 		 * 
 		 * - Vamos a registrar TODAS las peticiones HTTP 
@@ -65,7 +67,7 @@ public class FiltroFueraDeLugar implements Filter {
 		
 		// SALIDA DEL FILTRO
 		
-		System.out.println(method + ": " + url);
+		System.out.println("FILTRO 1 SALIDA");
 		
 	}
 
