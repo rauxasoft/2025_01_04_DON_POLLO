@@ -1,11 +1,11 @@
-package com.sinensia.donpollo.auditoria.filter;
+package com.sinensia.auditoria.filter;
 
 import java.io.IOException;
 
 import org.springframework.stereotype.Component;
 
-import com.sinensia.donpollo.auditoria.integration.RequestLogRepository;
-import com.sinensia.donpollo.auditoria.model.RequestLog;
+import com.sinensia.auditoria.integration.RequestLogRepository;
+import com.sinensia.auditoria.model.RequestLog;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

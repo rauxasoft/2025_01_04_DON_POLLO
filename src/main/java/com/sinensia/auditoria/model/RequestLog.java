@@ -1,4 +1,4 @@
-package com.sinensia.donpollo.auditoria.model;
+package com.sinensia.auditoria.model;
 
 import java.util.Objects;
 

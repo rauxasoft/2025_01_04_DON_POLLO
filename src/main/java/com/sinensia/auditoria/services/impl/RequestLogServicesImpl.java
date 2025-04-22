@@ -1,13 +1,13 @@
-package com.sinensia.donpollo.auditoria.services.impl;
+package com.sinensia.auditoria.services.impl;
 
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.sinensia.donpollo.auditoria.integration.RequestLogRepository;
-import com.sinensia.donpollo.auditoria.model.RequestLog;
-import com.sinensia.donpollo.auditoria.services.RequestLogServices;
+import com.sinensia.auditoria.integration.RequestLogRepository;
+import com.sinensia.auditoria.model.RequestLog;
+import com.sinensia.auditoria.services.RequestLogServices;
 
 @Service
 public class RequestLogServicesImpl implements RequestLogServices {
