@@ -16,12 +16,11 @@ public class ArquitecturaTest {
 		
 		JavaClasses classes = new ClassFileImporter().importPackages("com.sinensia.donpollo.business.services.impl");
 		
-		ArchRule regla = Architectures.layeredArchitecture()
-				
-				
-				.layer("Service").definedBy("..service..")
+		ArchRule regla = Architectures.layeredArchitecture()  // sin ningún puto argumento!
+				.layer("Controller").definedBy("..controller..")
+				.layer("Service").definedBy("..services..")
 				.whereLayer("Service").mayOnlyBeAccessedByLayers("Controller");
-		
+				
 		regla.check(classes);
 		
 	}
