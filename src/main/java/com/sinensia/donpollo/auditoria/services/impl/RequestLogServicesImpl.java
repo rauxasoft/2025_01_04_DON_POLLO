@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.sinensia.donpollo.auditoria.integration.RequestLogRepository;
 import com.sinensia.donpollo.auditoria.model.RequestLog;
-import com.sinensia.donpollo.auditoria.model.RequestLogRepository;
 import com.sinensia.donpollo.auditoria.services.RequestLogServices;
 
 @Service
@@ -20,7 +20,7 @@ public class RequestLogServicesImpl implements RequestLogServices {
 	
 	@Override
 	public List<RequestLog> getAll() {
-		return requestLogRepository.findAll(Sort.by("id").descending());
+		return requestLogRepository.findAll(Sort.by("timeStamp").descending());
 	}
 
 }

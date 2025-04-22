@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Component;
 
+import com.sinensia.donpollo.auditoria.integration.RequestLogRepository;
 import com.sinensia.donpollo.auditoria.model.RequestLog;
-import com.sinensia.donpollo.auditoria.model.RequestLogRepository;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
