@@ -10,10 +10,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -24,6 +26,7 @@ public class PedidoPL {
 
 	@Id
 	@Column(name="CODIGO")
+	@GeneratedValue(generator = "PEDIDO_SEQ")
 	private Long id;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -49,6 +52,7 @@ public class PedidoPL {
 	
 	@ElementCollection(fetch =  FetchType.EAGER)
 	@JoinTable(name = "LINEAS_PEDIDO", joinColumns = @JoinColumn(name="CODIGO_PEDIDO"))
+	@OrderColumn(name="ORDEN")
 	private List<LineaDetallePL> lineas;
 	
 	public PedidoPL() {

@@ -13,16 +13,22 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MvcResult;
 
+import com.sinensia.auditoria.filter.FiltroAuditor;
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
 import com.sinensia.donpollo.presentation.config.ErrorResponse;
 
-@WebMvcTest(ProductoController.class)
+@WebMvcTest(value = ProductoController.class, 
+excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, 
+									   classes = FiltroAuditor.class)
+)
 public class ProductoControllerTest extends AbstractControllerTest {
 
 	@MockitoBean
