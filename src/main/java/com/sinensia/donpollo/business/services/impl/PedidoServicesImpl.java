@@ -10,11 +10,11 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.stereotype.Service;
 
 import com.sinensia.donpollo.business.config.BusinessException;
-import com.sinensia.donpollo.business.model.EstadoPedido;
 import com.sinensia.donpollo.business.model.Pedido;
 import com.sinensia.donpollo.business.model.dtos.PedidoDTO1;
 import com.sinensia.donpollo.business.services.PedidoServices;
 import com.sinensia.donpollo.integration.model.PedidoPL;
+import com.sinensia.donpollo.integration.model.EstadoPedidoPL;
 import com.sinensia.donpollo.integration.repositories.PedidoPLRepository;
 
 import jakarta.transaction.Transactional;
@@ -156,12 +156,12 @@ public class PedidoServicesImpl implements PedidoServices{
 					int id = ((Long) fila[0]).intValue();
 					String nomEstablecimiento = (String) fila[1];
 					Date fecha = (Date) fila[2];
-					EstadoPedido estado = (EstadoPedido) fila[3];
+					EstadoPedidoPL estadoPedidoPL = (EstadoPedidoPL) fila[3];
 					String dependiente = (String) fila[4];
 			        String strFecha = formateadorFecha.format(fecha);
 			        String strHora = formateadorHora.format(fecha);
 
-					return new PedidoDTO1(id, nomEstablecimiento, strFecha, strHora, estado.toString(), dependiente);
+					return new PedidoDTO1(id, nomEstablecimiento, strFecha, strHora, estadoPedidoPL.toString(), dependiente);
 				}).toList();
 	}
 	
