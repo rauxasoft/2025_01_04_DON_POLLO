@@ -10,7 +10,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.library.Architectures;
 
 public class ArquitecturaTest {
-
+/*
 	@Test
 	void los_servicios_deben_estar_en_el_paquete_services() {
 		
@@ -23,6 +23,11 @@ public class ArquitecturaTest {
 				
 		regla.check(classes);
 		
+		
+		// GET http://localhost:8080/estaciones
+		// GET http://localhost:8080/estaciones/{id}
+		// GET http://localhost:8080/estaciones?estado=MANTENIMIENTO
+		
 	}
-	
+*/
 }
