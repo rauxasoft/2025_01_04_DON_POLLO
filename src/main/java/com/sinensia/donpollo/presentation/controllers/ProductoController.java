@@ -1,6 +1,8 @@
 package com.sinensia.donpollo.presentation.controllers;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.sinensia.donpollo.business.model.Familia;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
+import com.sinensia.donpollo.integration.repositories.ProductoPLRepository;
 import com.sinensia.donpollo.presentation.config.ErrorResponse;
 
 @RestController
@@ -95,6 +99,18 @@ public class ProductoController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		productoServices.delete(id);
+	}
+	
+	@GetMapping("/estadisticas/by-familia")
+	public Map<String, Integer> getEstadisticaNumeroProductosByFamilia(){
+		
+		Map<String, Integer> resultados = new HashMap<>();
+		
+		productoServices.getEstadisticaNumeroProductosByFamilia().forEach((k, v) -> {
+			resultados.put(k.getNombre(), v);
+		});
+		
+		return resultados;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.sinensia.donpollo.business.services.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -150,6 +151,10 @@ public class ProductoServicesImpl implements ProductoServices {
 	public void incrementarPrecios(List<Producto> productos, double porcentaje) {
 		
 		// TODO Buscar solición para esto!
+		// Aqui la idea es NO tener un método específico en el repositorio. 
+		// Aquí deberíamos poder utilizar el mismo método que ya tenemos en el reposirio.
+		
+		// Resumiendo: convertir List<Producto> en Long[]
 		
 		Long[] ids = {};
 		
@@ -166,8 +171,17 @@ public class ProductoServicesImpl implements ProductoServices {
 
 	@Override
 	public Map<Familia, Integer> getEstadisticaNumeroProductosByFamilia() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Object[]> resultados = productoPLRepository.getEstadisticaNumeroProductosByFamilia();
+		
+		Map<Familia, Integer> estadistica = new HashMap<>();
+		
+		resultados.forEach(resultado -> {	
+			estadistica.put(mapper.map((FamiliaPL) resultado[0], Familia.class), ((Long) resultado[1]).intValue());
+			
+		});
+		
+		return estadistica;
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
 			 WHERE p.id IN :productos
 			""")
 	void updatePrecios(Long[] productos, double incremental);
-	
+/*	
 	@Modifying
 	@Query("""
 			UPDATE ProductoPL p
@@ -68,5 +68,22 @@ public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
 			 WHERE p IN :productos
 			""")
 	void updatePrecios(List<ProductoPL> productos, double incremental);
+*/	
 	
+	
+	/*
+	 * SELECT      F.NOMBRE,
+                    COUNT(P.CODIGO) AS CANTIDAD 
+		FROM          FAMILIAS F LEFT JOIN PRODUCTOS P ON F.ID = P.ID_FAMILIA  
+		GROUP BY F.ID
+	 */
+	
+	@Query("""
+		
+			SELECT f, COUNT(p) FROM FamiliaPL f LEFT JOIN ProductoPL p ON p.familia = f
+			GROUP BY f	
+			
+		""")
+	List<Object[]> getEstadisticaNumeroProductosByFamilia();
+		
 }

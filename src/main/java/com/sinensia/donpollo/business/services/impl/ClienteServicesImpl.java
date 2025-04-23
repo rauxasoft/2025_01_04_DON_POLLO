@@ -46,7 +46,7 @@ public class ClienteServicesImpl implements ClienteServices {
 
 	@Override
 	public Optional<Cliente> read(Long id) {
-		
+			
 		return clientePLRepository.findById(id).stream()
 				.map(x -> mapper.map(x, Cliente.class))
 				.findAny();

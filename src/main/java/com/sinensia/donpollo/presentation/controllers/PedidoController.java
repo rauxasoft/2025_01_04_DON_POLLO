@@ -23,15 +23,17 @@ import com.sinensia.donpollo.presentation.config.ErrorResponse;
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoController {
-
+	
 	private PedidoServices pedidoServices;
-
+	
 	public PedidoController(PedidoServices pedidoServices) {
 		this.pedidoServices = pedidoServices;
 	}
 	
 	@GetMapping
 	public ResponseEntity<?> getPedidos(@RequestParam(required = false, defaultValue = "ALL") String view){
+		
+		System.out.println("ESTO NO!");
 		
 		Object respuesta = null;
 		

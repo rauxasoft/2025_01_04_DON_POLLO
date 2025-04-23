@@ -1,10 +1,10 @@
 package com.sinensia.donpollo.integration.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -124,7 +124,7 @@ public class ProductoPLRepositoryTest {
 		assertEquals(9.0, precioNoActualizado);
 		
 	}
-	
+/*	
 	@Test
 	void updatePreciosProductListTest() {
 		
@@ -138,5 +138,18 @@ public class ProductoPLRepositoryTest {
 		assertTrue(productoPLRepository.findById(100L).get().getPrecio() == 6.6);
 		
 	}
-
+*/
+	
+	@Test
+	void getEstadisticaNumeroProductosByFamilia() {
+		
+		List<Object[]> resultados = productoPLRepository.getEstadisticaNumeroProductosByFamilia();
+		
+		resultados.forEach(fila -> {
+			System.err.println(fila[0] + ": " + fila[1]);
+		});
+		
+		fail("Not implemented yet");
+	}
+	
 }
