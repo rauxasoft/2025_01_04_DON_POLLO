@@ -2,6 +2,7 @@ package com.sinensia.donpollo.business.services.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -105,35 +106,79 @@ public class PedidoServicesImpl implements PedidoServices{
 		return (int) pedidoPLRepository.count();
 	}
 
+	// TODO Test unitario de todos los métodos de este servicio
+	
 	@Override
-	public Map<String, Integer> getEstadisticaNumeroPedidosByEstablecimiento() {
-		// TODO Auto-generated method stub
-		return null;
+    public Map<String, Integer> getEstadisticaNumeroPedidosByEstablecimiento() {
+        
+        List<Object[]> resultados = pedidoPLRepository.getEstadisticaNumeroPedidosByEstablecimiento();
+       
+        Map<String, Integer> estadistica = new HashMap<>();
+
+        resultados.forEach(resultado -> {
+            estadistica.put((String)resultado[0], ((Long) resultado[1]).intValue());
+        });
+
+        return estadistica;
+    }
+
+	 @Override
+	 public Map<String, Integer> getEstadisticaNumeroPedidosByEstablecimiento(Date desde, Date hasta) {
+		 
+		 List<Object[]> resultados =  pedidoPLRepository.getEstadisticaNumeroPedidosByEstablecimiento();
+
+	     Map<String, Integer> estadistica = new HashMap<>();
+	        
+	     resultados.forEach(resultado -> {
+	    	 estadistica.put((String)resultado[0], ((Long) resultado[1]).intValue());     
+	     });
+	     
+	     return estadistica;
 	}
 
-	@Override
-	public Map<String, Integer> getEstadisticaNumeroPedidosByEstablecimiento(Date desde, Date hasta) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	    @Override
+	    public Map<String, Double> getEstadisticaImporteMedioByEstablecimiento(Date desde, Date hasta) {
+	        
+	        List<Object[]> lista = pedidoPLRepository.getEstadisticaImporteMedioByEstablecimiento(desde, hasta);
 
-	@Override
-	public Map<String, Double> getEstadisticaImporteMedioByEstablecimiento(Date desde, Date hasta) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	        Map<String, Double> resultado = new HashMap<>();
 
-	@Override
-	public Map<String, Double> getEstadisticaImporteMedioByEstablecimiento() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	        lista.stream().forEach(fila -> {
+	            resultado.put((String) fila[0], (Double) fila[1]);
+	        });
 
-	@Override
-	public Map<String, Integer> getEstadisticaNumeroPedidosByDependiente() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	        return resultado;
+	    }
+
+	    @Override
+	    public Map<String, Double> getEstadisticaImporteMedioByEstablecimiento() {
+
+	        List<Object[]> lista = pedidoPLRepository.getEstadisticaImporteMedioByEstablecimiento();
+
+	        Map<String, Double> resultado = new HashMap<>();
+
+	        lista.stream().forEach(fila -> {
+	            resultado.put((String) fila[0], (Double) fila[1]);
+	        });
+
+	        return resultado;
+	    }
+
+	    // TODO Los dependientes vienen con el nombre completo y su ID en formato "[2334] López Ridruejo, Fermín"
+	   
+	    @Override
+	    public Map<String, Integer> getEstadisticaNumeroPedidosByDependiente() {
+
+	        List<Object[]> resultados = pedidoPLRepository.getEstadisticaNumeroPedidosByDependiente();
+
+	        Map<String, Integer> estadistica = new HashMap<>();
+
+	        resultados.stream().forEach(fila -> {
+	        	estadistica.put((String) fila[0], ((Long) fila[1]).intValue());
+	        });
+	        
+	        return estadistica;
+	 }
 
 	@Override
 	public Map<String, Integer> getEstadisticaNumeroPedidosByDependiente(Date desde, Date hasta) {

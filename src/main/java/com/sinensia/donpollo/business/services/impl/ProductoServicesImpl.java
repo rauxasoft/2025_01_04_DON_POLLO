@@ -1,6 +1,7 @@
 package com.sinensia.donpollo.business.services.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -164,16 +165,38 @@ public class ProductoServicesImpl implements ProductoServices {
 		productoPLRepository.updatePrecios(idsProducto, porcentaje);	
 	}
 
+	// TODO Test unitario
+	
 	@Override
 	public Map<Familia, Integer> getEstadisticaNumeroProductosByFamilia() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Object[]> resultados = productoPLRepository.getEstadisticaNumeroProductosByFamilia();
+		
+		Map<Familia, Integer> estadistica = new HashMap<>();
+		
+		resultados.forEach(resultado -> {	
+			estadistica.put(mapper.map((FamiliaPL) resultado[0], Familia.class), ((Long) resultado[1]).intValue());
+			
+		});
+		
+		return estadistica;
 	}
 
+	// TODO Test unitario
+	
 	@Override
 	public Map<Familia, Double> getEstadisticaPrecioMedioProductosByFamilia() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Object[]> resultados = productoPLRepository.getEstadisticaPrecioMedioProductosByFamilia();
+		
+		Map<Familia, Double> estadistica = new HashMap<>();
+
+		resultados.forEach(resultado -> {	
+			estadistica.put(mapper.map((FamiliaPL) resultado[0], Familia.class), ((Double) resultado[1]));
+			
+		});
+		
+		return estadistica;
 	}
 	
 	// *******************************************************

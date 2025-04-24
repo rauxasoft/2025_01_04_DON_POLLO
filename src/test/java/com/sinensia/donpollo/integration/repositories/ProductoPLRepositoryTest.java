@@ -78,7 +78,7 @@ public class ProductoPLRepositoryTest {
 	@Test
 	void getDTO2Test() {
 		
-		// TODO
+		// TODO revisar poder testear sin tener en cuenta el orden y evitando assertTrue habiendo assertEquals
 		
 		List<Object[]> resultados = productoPLRepository.getDTO2();
 		

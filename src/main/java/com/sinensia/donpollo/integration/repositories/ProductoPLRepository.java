@@ -21,15 +21,13 @@ public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
 	List<ProductoPL> findByFechaAltaBetweenOrderByFechaAlta(Date desde, Date hasta);
 
 	@Query("""
-			
 			SELECT UPPER(CONCAT(p.nombre, ' [',  p.familia.nombre, ']')), p.precio
 				FROM ProductoPL p
 			
 			""")
 	List<Object[]> getDTO1();
 	
-	@Query("""
-			
+	@Query("""	
 			SELECT 
 			 	UPPER(p.nombre), 
 			 	CASE
@@ -68,5 +66,23 @@ public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
 			 WHERE p IN :productos
 			""")
 	void updatePrecios(List<ProductoPL> productos, double incremental);
+	
+	// TODO Test repositorio
+	
+	@Query("""	
+			SELECT f, COUNT(p) 
+			FROM FamiliaPL f LEFT JOIN ProductoPL p ON p.familia = f
+			GROUP BY f	
+		    """)
+	List<Object[]> getEstadisticaNumeroProductosByFamilia();
+	
+	// TODO Test repositorio
+	
+	@Query("""
+			SELECT f, ROUND(AVG(p.precio), 2)
+			FROM FamiliaPL f LEFT JOIN ProductoPL p ON p.familia = f
+			GROUP BY f
+			""")
+	List<Object[]> getEstadisticaPrecioMedioProductosByFamilia();
 	
 }

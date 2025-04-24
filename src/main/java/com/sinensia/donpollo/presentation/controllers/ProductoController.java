@@ -1,6 +1,8 @@
 package com.sinensia.donpollo.presentation.controllers;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -95,6 +97,34 @@ public class ProductoController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		productoServices.delete(id);
+	}
+	
+	// TODO Test controlador
+	
+	@GetMapping("/estadisticas/by-familia")
+	public Map<String, Integer> getEstadisticaNumeroProductosByFamilia(){
+		
+		Map<String, Integer> resultados = new HashMap<>();
+		
+		productoServices.getEstadisticaNumeroProductosByFamilia().forEach((k, v) -> {
+			resultados.put(k.getNombre(), v);
+		});
+		
+		return resultados;
+	}
+	
+	// TODO Test controlador
+	
+	@GetMapping("/estadisticas/precio-medio-by-familia")
+	public Map<String, Double> getEstadisticaPrecioMedioProductosByFamilia(){
+		
+		Map<String, Double> resultados = new HashMap<>();
+		
+		productoServices.getEstadisticaPrecioMedioProductosByFamilia().forEach((k, v) -> {
+			resultados.put(k.getNombre(), v);
+		});
+		
+		return resultados;
 	}
 
 }

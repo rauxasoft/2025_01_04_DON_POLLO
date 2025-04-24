@@ -1,8 +1,11 @@
 package com.sinensia.donpollo.presentation.controllers;
 
 import java.net.URI;
+import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,5 +79,20 @@ public class PedidoController {
 		pedidoServices.update(pedido);
 		
 	}
+	
+	// TODO Test del endpoint
+	
+    @GetMapping("/estadisticas/por-establecimiento")
+    public Map<String, Integer> getEstadistica1() {
+        return pedidoServices.getEstadisticaNumeroPedidosByEstablecimiento();
+    }
+    
+	@GetMapping("/estadisticas/by-establecimiento/fechas")
+	public Map<String, Integer> getEstadisticaNumeroPedidosByEstablecimiento(
+			@RequestParam("desde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date desde,
+	        @RequestParam("hasta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date hasta) {
+
+	        return pedidoServices.getEstadisticaNumeroPedidosByEstablecimiento(desde, hasta);
+	} 
 
 }

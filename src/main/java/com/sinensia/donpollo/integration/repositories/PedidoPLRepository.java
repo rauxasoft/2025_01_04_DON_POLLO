@@ -35,4 +35,48 @@ public interface PedidoPLRepository extends JpaRepository<PedidoPL, Long>{
 			""")
 	List<Object[]> getDTO1();
 	
+	// TODO test de la query
+	
+	@Query("""
+	            SELECT e.nombre, COUNT(p.id) 
+	            FROM PedidoPL p RIGHT JOIN EstablecimientoPL e ON p.establecimiento = e
+	            GROUP BY e 
+	        """)
+	 List<Object[]> getEstadisticaNumeroPedidosByEstablecimiento();
+	 
+	// TODO test de la query
+	 
+	 @Query(""" 
+		        SELECT e.nombre, COUNT(p) 
+		        FROM EstablecimientoPL e LEFT JOIN PedidoPL p ON p.establecimiento = e
+		        WHERE p.fechaHora BETWEEN :desde AND :hasta
+		        GROUP BY e
+		    """)
+	  List<Object[]> getEstadisticaNumeroPedidosByEstablecimiento(Date desde, Date hasta);
+	  
+	  // *************************************************
+
+	  @Query("""
+                  
+                  SELECT  e.nombre, ROUND(AVG(l.precio * l.cantidad), 2)
+                    FROM  EstablecimientoPL e LEFT JOIN PedidoPL p ON p.establecimiento = e JOIN p.lineas l
+                   WHERE  p.fechaHora BETWEEN :desde AND :hasta
+                GROUP BY  e
+            """)
+	  List<Object[]> getEstadisticaImporteMedioByEstablecimiento(Date desde, Date hasta);
+
+	  @Query("""
+                SELECT      e.nombre, ROUND(AVG(l.precio * l.cantidad), 2)
+                FROM        EstablecimientoPL e LEFT JOIN PedidoPL p ON p.establecimiento = e JOIN p.lineas l
+                GROUP BY    e
+            """)
+	  List<Object[]> getEstadisticaImporteMedioByEstablecimiento();
+
+	  @Query("""
+                SELECT      d.nombre, COUNT(p)
+                FROM        DependientePL d LEFT JOIN PedidoPL p ON p.dependiente = d
+                GROUP BY    d
+            """)
+	  List<Object[]> getEstadisticaNumeroPedidosByDependiente();
+
 }
