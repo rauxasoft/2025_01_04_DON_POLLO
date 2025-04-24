@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,14 +144,33 @@ public class ProductoPLRepositoryTest {
 	
 	@Test
 	void getEstadisticaNumeroProductosByFamilia() {
+
+		Map<Long, Long> resultadosEsperados = new HashMap<>();
+		
+		resultadosEsperados.put(1L,  6L);  // Familia [id=1, nombre=LICOR]: 6
+		resultadosEsperados.put(2L, 11L);  // Familia [id=2, nombre=REFRESCO]: 11
+		resultadosEsperados.put(3L,  2L);  // Familia [id=3, nombre=CERVEZA]: 2
+		resultadosEsperados.put(4L,  6L);  // Familia [id=4, nombre=TAPA]: 6
+		resultadosEsperados.put(5L, 12L);  // Familia [id=5, nombre=COMIDA]: 12
+		resultadosEsperados.put(6L,  0L);  // Familia [id=6, nombre=POSTRE]: 0
+		resultadosEsperados.put(7L,  3L);  // Familia [id=7, nombre=AGUA]: 3
+		resultadosEsperados.put(8L,  5L);  // Familia [id=8, nombre=INFUSION]: 5
+		resultadosEsperados.put(9L,  11L); // Familia [id=9, nombre=BOCADILLO]: 11
+		resultadosEsperados.put(10L,  7L); // Familia [id=10, nombre=CAFE]: 7
+		resultadosEsperados.put(11L,  7L); // Familia [id=11, nombre=BOLLERIA]: 7
+		resultadosEsperados.put(12L,  0L); // Familia [id=12, nombre=ZUMO]: 0
 		
 		List<Object[]> resultados = productoPLRepository.getEstadisticaNumeroProductosByFamilia();
 		
 		resultados.forEach(fila -> {
-			System.err.println(fila[0] + ": " + fila[1]);
+			
+			Long idFamilia = ((FamiliaPL) fila[0]).getId();
+			Long cantidad = (Long) fila [1];
+			
+			assertEquals(resultadosEsperados.get(idFamilia), cantidad);
+			
 		});
-		
-		fail("Not implemented yet");
+			
 	}
 	
 }
