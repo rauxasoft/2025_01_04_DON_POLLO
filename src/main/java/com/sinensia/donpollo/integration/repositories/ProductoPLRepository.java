@@ -58,14 +58,7 @@ public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
 			 WHERE p.id IN :productos
 			""")
 	void updatePrecios(Long[] productos, double incremental);
-	
-	@Modifying
-	@Query("""
-			UPDATE ProductoPL p
-			   SET p.precio = p.precio + (p.precio * :incremental) / 100 
-			 WHERE p IN :productos
-			""")
-	void updatePrecios(List<ProductoPL> productos, double incremental);
+
 	
 	// TODO Test repositorio
 	
@@ -84,5 +77,5 @@ public interface ProductoPLRepository extends JpaRepository<ProductoPL, Long> {
 			GROUP BY f
 			""")
 	List<Object[]> getEstadisticaPrecioMedioProductosByFamilia();
-	
+
 }

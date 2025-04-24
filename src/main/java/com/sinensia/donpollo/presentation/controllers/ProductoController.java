@@ -100,7 +100,7 @@ public class ProductoController {
 	}
 	
 	// TODO Test controlador
-	
+
 	@GetMapping("/estadisticas/by-familia")
 	public Map<String, Integer> getEstadisticaNumeroProductosByFamilia(){
 		
@@ -112,7 +112,7 @@ public class ProductoController {
 		
 		return resultados;
 	}
-	
+
 	// TODO Test controlador
 	
 	@GetMapping("/estadisticas/precio-medio-by-familia")

@@ -151,6 +151,10 @@ public class ProductoServicesImpl implements ProductoServices {
 	public void incrementarPrecios(List<Producto> productos, double porcentaje) {
 		
 		// TODO Buscar solición para esto!
+		// Aqui la idea es NO tener un método específico en el repositorio. 
+		// Aquí deberíamos poder utilizar el mismo método que ya tenemos en el reposirio.
+		
+		// Resumiendo: convertir List<Producto> en Long[]
 		
 		Long[] ids = {};
 		
