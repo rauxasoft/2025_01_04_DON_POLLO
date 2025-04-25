@@ -23,7 +23,7 @@ public class MyArchitectureTest {
 		
         JavaClasses importedClasses = new ClassFileImporter().importPackages("com.sinensia.donpollo");
     
-        ArchRule rule = classes().that()
+        final ArchRule rule = classes().that()
         							.areAnnotatedWith(Service.class)
         							.and()
         							.haveNameMatching(".*ServicesImpl")
@@ -37,14 +37,14 @@ public class MyArchitectureTest {
 		
         JavaClasses importedClasses = new ClassFileImporter().importPackages("com.sinensia.donpollo");
     
-        ArchRule rule1 = classes().that()
+        final ArchRule rule1 = classes().that()
         								.areAnnotatedWith(RestController.class)
         								.should()
         								.haveNameMatching(".*Controller")
         								.andShould()
         								.resideInAPackage("..presentation.controllers");
         	
-        ArchRule rule2 = noClasses().that()
+        final ArchRule rule2 = noClasses().that()
         								.resideInAnyPackage("..presentation..")
         								.should()
         								.dependOnClassesThat()
@@ -68,8 +68,7 @@ public class MyArchitectureTest {
 	@Test
 	public void no_se_utiliza_logger_de_java_util() {
 		
-		// Otra forma de verlo...
-		
+	
 		JavaClasses importedClasses = new ClassFileImporter().importPackages("com.sinensia.donpollo");
 		
 		GeneralCodingRules.NO_CLASSES_SHOULD_USE_JAVA_UTIL_LOGGING.check(importedClasses);

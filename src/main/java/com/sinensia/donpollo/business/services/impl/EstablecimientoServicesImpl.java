@@ -115,7 +115,15 @@ public class EstablecimientoServicesImpl implements EstablecimientoServices {
 
 	@Override
 	public List<EstablecimientoDTO3> getDTO3() {
-		return establecimientoPLRepository.getDTO3();
+		
+		return establecimientoPLRepository.getDTO3().stream()
+				.map(fila -> {
+					String nombre = (String) fila[0];
+					String datos = (String) fila[1];
+			
+					return new EstablecimientoDTO3(nombre, datos);
+				})
+				.toList();	
 	}
 
 }

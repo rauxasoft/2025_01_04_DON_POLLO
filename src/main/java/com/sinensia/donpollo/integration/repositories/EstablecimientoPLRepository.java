@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3;
 import com.sinensia.donpollo.integration.model.EstablecimientoPL;
 
 public interface EstablecimientoPLRepository extends JpaRepository<EstablecimientoPL, Long> {
@@ -33,11 +32,10 @@ public interface EstablecimientoPLRepository extends JpaRepository<Establecimien
 	
 	@Query("""
 			
-			SELECT new com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3(
-				          UPPER(e.nombre), 
-						  UPPER(CONCAT(e.direccion.poblacion, ' [', e.direccion.provincia,'] - ', e.datosContacto.telefono1))) 
+			SELECT UPPER(e.nombre),
+			       UPPER(CONCAT(e.direccion.poblacion, ' [', e.direccion.provincia,'] - ', e.datosContacto.telefono1)) 
 			  FROM EstablecimientoPL e
 		 
 	""")
-	List<EstablecimientoDTO3> getDTO3();
+	List<Object[]> getDTO3();
 }

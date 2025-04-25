@@ -1,16 +1,14 @@
 package com.sinensia.donpollo.integration.repositories;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
-
-import com.sinensia.donpollo.business.model.dtos.EstablecimientoDTO3;
 
 @DataJpaTest
 @Sql(scripts= {"/data/h2/schema_testing.sql", "/data/h2/data_testing.sql"})
@@ -61,10 +59,20 @@ public class EstablecimientoPLRepositoryTest {
 	@Test
 	void getDTO3Test() {
 		
-		EstablecimientoDTO3 resultado = establecimientoRepository.getDTO3().get(0);
+		String establecimiento1 = "GRAN VIA 2BARCELONA [BARCELONA] - +34 932247078";
+		String establecimiento2 = "VAGUADAMADRID [MADRID] - +34 913682828";
+		
+		List<String> establecimientosEsperados = Arrays.asList(establecimiento1, establecimiento2);
+		List<String> establecimientosObtenidos = new ArrayList<>();
+		
+		List<Object[]> resultado = establecimientoRepository.getDTO3();
 
-		assertTrue(resultado.nombre().equals("GRAN VIA 2"));
-		assertTrue(resultado.datos().equals("BARCELONA [BARCELONA] - +34 932247078"));
+		resultado.stream().forEach(fila -> {
+			establecimientosObtenidos.add((String) fila[0] + (String) fila[1]);
+		});
+		
+		assertEquals(2, establecimientosObtenidos.size());
+		assertTrue(establecimientosEsperados.containsAll(establecimientosObtenidos));
 		
 	}
 
