@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.4</version>
+		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	
@@ -79,6 +79,15 @@
 			<groupId>net.sf.dozer</groupId>
 			<artifactId>dozer</artifactId>
 			<version>5.5.1</version>	
+		</dependency>
+		
+		<!-- ArchUnit -->
+		
+		<dependency>
+    		<groupId>com.tngtech.archunit</groupId>
+    		<artifactId>archunit-junit5</artifactId>
+    		<version>1.4.0</version>
+    		<scope>test</scope>
 		</dependency>
 
 	</dependencies>
