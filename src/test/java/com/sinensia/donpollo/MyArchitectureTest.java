@@ -19,7 +19,6 @@ import static com.tngtech.archunit.library.GeneralCodingRules.NO_CLASSES_SHOULD_
 public class MyArchitectureTest {
 	
 	@Test
-	@Disabled
     public void las_implementaciones_de_business_estan_en_su_sitio() {
 		
         JavaClasses importedClasses = new ClassFileImporter().importPackages("com.sinensia.donpollo");
@@ -34,7 +33,6 @@ public class MyArchitectureTest {
     }
 	
 	@Test
-	@Disabled
     public void los_controladores_estan_en_su_sitio() {
 		
         JavaClasses importedClasses = new ClassFileImporter().importPackages("com.sinensia.donpollo");
@@ -68,7 +66,6 @@ public class MyArchitectureTest {
 	}
 	
 	@Test
-	@Disabled
 	public void no_se_utiliza_logger_de_java_util() {
 		
 	

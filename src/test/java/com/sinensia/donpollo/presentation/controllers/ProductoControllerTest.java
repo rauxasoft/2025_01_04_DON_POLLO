@@ -23,7 +23,7 @@ import com.sinensia.auditoria.filter.FiltroAuditor;
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
-import com.sinensia.donpollo.presentation.config.ErrorResponse;
+import com.sinensia.donpollo.common.presentation.ErrorResponse;
 
 @WebMvcTest(value = ProductoController.class, 
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, 

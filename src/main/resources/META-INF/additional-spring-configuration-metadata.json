@@ -1,0 +1,12 @@
+{
+	"properties": [
+		{"name":"donpollo.app.jwt-secret",
+		 "type":"java.lang.String",
+		 "description":"Clave privada para firmar los tokens"
+		},
+		{"name":"donpollo.app.jwt-expiration-ms",
+		 "type":"java.lang.Long",
+		 "description":"Tiempo de expiration en milisegundos"
+		}
+	]
+}

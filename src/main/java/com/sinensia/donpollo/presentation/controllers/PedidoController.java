@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,10 +22,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sinensia.donpollo.business.model.Pedido;
 import com.sinensia.donpollo.business.services.PedidoServices;
-import com.sinensia.donpollo.presentation.config.ErrorResponse;
+import com.sinensia.donpollo.common.presentation.ErrorResponse;
 
 @RestController
 @RequestMapping("/pedidos")
+@CrossOrigin
 public class PedidoController {
 	
 	private PedidoServices pedidoServices;

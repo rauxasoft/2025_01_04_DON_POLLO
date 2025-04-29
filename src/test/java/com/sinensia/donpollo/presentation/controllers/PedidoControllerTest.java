@@ -26,7 +26,7 @@ import com.sinensia.auditoria.filter.FiltroAuditor;
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Pedido;
 import com.sinensia.donpollo.business.services.PedidoServices;
-import com.sinensia.donpollo.presentation.config.ErrorResponse;
+import com.sinensia.donpollo.common.presentation.ErrorResponse;
 
 @WebMvcTest(value = PedidoController.class, 
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, 

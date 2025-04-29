@@ -20,7 +20,7 @@ INSERT INTO ROLES (ID, NAME) VALUES (3, 'CLIENTE');
  */
 
 INSERT INTO USERS (ID, USERNAME, PASSWORD, FIRST_NAME, LAST_NAME, EMAIL, TELEFONO, ENABLED, LAST_PASSWORD_RESET_DATE) VALUES
-(1, 'u1', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'Pepín', 'Gálvez Ridruejuela', 'u1@gmail.com', '+34 636598871', 1, PARSEDATETIME('01-01-2016', 'dd-MM-yyyy')),
+(1, 'u1', '$2a$10$0CDIaJi.j4HWgba1uwkNa.pwgxFzmiQATMXVWnj5Epi4HZCZlhM7C', 'Pepín', 'Gálvez Ridruejuela', 'u1@gmail.com', '+34 636598871', 1, PARSEDATETIME('01-01-2016', 'dd-MM-yyyy')),
 (2, 'u2', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'Montse', 'Queralt Conejero', 'pingo@pingo.com','687253062', 1, PARSEDATETIME('01-01-2016', 'dd-MM-yyyy')),
 (3, 'u3', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'Carlota', 'Fernández Olaz', 'pingo@pingo.com','962207855', 1, PARSEDATETIME('01-01-2016', 'dd-MM-yyyy')),
 (4, 'u4', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'Honorio', 'Martín Salvador', 'disabled@user.com', '607253012', 1, PARSEDATETIME('01-01-2016', 'dd-MM-yyyy')),

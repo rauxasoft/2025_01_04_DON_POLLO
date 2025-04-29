@@ -66,17 +66,25 @@ public interface PedidoPLRepository extends JpaRepository<PedidoPL, Long>{
 	  List<Object[]> getEstadisticaImporteMedioByEstablecimiento(Date desde, Date hasta);
 
 	  @Query("""
-                SELECT      e.nombre, ROUND(AVG(l.precio * l.cantidad), 2)
-                FROM        EstablecimientoPL e LEFT JOIN PedidoPL p ON p.establecimiento = e JOIN p.lineas l
-                GROUP BY    e
+                  SELECT  e.nombre, ROUND(AVG(l.precio * l.cantidad), 2)
+                    FROM  EstablecimientoPL e LEFT JOIN PedidoPL p ON p.establecimiento = e JOIN p.lineas l
+                GROUP BY  e
             """)
 	  List<Object[]> getEstadisticaImporteMedioByEstablecimiento();
 
 	  @Query("""
-                SELECT      d.nombre, COUNT(p)
-                FROM        DependientePL d LEFT JOIN PedidoPL p ON p.dependiente = d
-                GROUP BY    d
+                  SELECT  d.nombre, COUNT(p)
+                    FROM  DependientePL d LEFT JOIN PedidoPL p ON p.dependiente = d
+                GROUP BY  d
             """)
 	  List<Object[]> getEstadisticaNumeroPedidosByDependiente();
+	  
+	  @Query("""
+                  SELECT  d.nombre, COUNT(p)
+                    FROM  DependientePL d LEFT JOIN PedidoPL p ON p.dependiente = d
+                   WHERE  p.fechaHora BETWEEN :desde AND :hasta
+                GROUP BY  d
+          """)
+	  List<Object[]> getEstadisticaNumeroPedidosByDependiente(Date desde, Date hasta);
 
 }

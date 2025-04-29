@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +19,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sinensia.donpollo.presentation.config.ErrorResponse;
 import com.sinensia.donpollo.business.model.Establecimiento;
 import com.sinensia.donpollo.business.services.EstablecimientoServices;
+import com.sinensia.donpollo.common.presentation.ErrorResponse;
 
 @RestController
 @RequestMapping("/establecimientos")
+@CrossOrigin
 public class EstablecimientoController {
 	
 	private final EstablecimientoServices establecimientoServices;

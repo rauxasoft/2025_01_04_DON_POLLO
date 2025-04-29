@@ -58,7 +58,7 @@ public class UsuarioPL {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastPasswordResetDate;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="USER_ROLES", joinColumns = @JoinColumn(name="ID_USER"), inverseJoinColumns = @JoinColumn(name="ID_ROL"))
 	private Set<RolePL> roles = new HashSet<>();
 	

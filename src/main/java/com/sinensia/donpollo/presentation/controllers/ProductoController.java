@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +22,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
-import com.sinensia.donpollo.presentation.config.ErrorResponse;
+import com.sinensia.donpollo.common.presentation.ErrorResponse;
 
 @RestController
 @RequestMapping("/productos")
+@CrossOrigin
 public class ProductoController {
 
 	private ProductoServices productoServices;

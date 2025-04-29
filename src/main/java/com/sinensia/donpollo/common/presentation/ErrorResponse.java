@@ -1,4 +1,4 @@
-package com.sinensia.donpollo.presentation.config;
+package com.sinensia.donpollo.common.presentation;
 
 public class ErrorResponse {
 	

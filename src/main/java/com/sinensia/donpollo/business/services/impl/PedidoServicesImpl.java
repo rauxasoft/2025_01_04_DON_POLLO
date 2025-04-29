@@ -122,24 +122,38 @@ public class PedidoServicesImpl implements PedidoServices{
         return estadistica;
     }
 
-	 @Override
-	 public Map<String, Integer> getEstadisticaNumeroPedidosByEstablecimiento(Date desde, Date hasta) {
+	@Override
+	public Map<String, Integer> getEstadisticaNumeroPedidosByEstablecimiento(Date desde, Date hasta) {
 		 
-		 List<Object[]> resultados =  pedidoPLRepository.getEstadisticaNumeroPedidosByEstablecimiento();
+		List<Object[]> resultados =  pedidoPLRepository.getEstadisticaNumeroPedidosByEstablecimiento();
 
-	     Map<String, Integer> estadistica = new HashMap<>();
+	    Map<String, Integer> estadistica = new HashMap<>();
 	        
-	     resultados.forEach(resultado -> {
-	    	 estadistica.put((String)resultado[0], ((Long) resultado[1]).intValue());     
-	     });
+	    resultados.forEach(resultado -> {
+	    	estadistica.put((String)resultado[0], ((Long) resultado[1]).intValue());     
+	    });
 	     
-	     return estadistica;
+	    return estadistica;
 	}
 
-	    @Override
-	    public Map<String, Double> getEstadisticaImporteMedioByEstablecimiento(Date desde, Date hasta) {
+	@Override
+	public Map<String, Double> getEstadisticaImporteMedioByEstablecimiento(Date desde, Date hasta) {
 	        
-	        List<Object[]> lista = pedidoPLRepository.getEstadisticaImporteMedioByEstablecimiento(desde, hasta);
+	    List<Object[]> lista = pedidoPLRepository.getEstadisticaImporteMedioByEstablecimiento(desde, hasta);
+
+	     Map<String, Double> resultado = new HashMap<>();
+
+	      lista.stream().forEach(fila -> {
+	            resultado.put((String) fila[0], (Double) fila[1]);
+	     });
+
+	     return resultado;
+	 }
+
+	 @Override
+	 public Map<String, Double> getEstadisticaImporteMedioByEstablecimiento() {
+
+	     List<Object[]> lista = pedidoPLRepository.getEstadisticaImporteMedioByEstablecimiento();
 
 	        Map<String, Double> resultado = new HashMap<>();
 
@@ -148,26 +162,12 @@ public class PedidoServicesImpl implements PedidoServices{
 	        });
 
 	        return resultado;
-	    }
+	  }
 
-	    @Override
-	    public Map<String, Double> getEstadisticaImporteMedioByEstablecimiento() {
-
-	        List<Object[]> lista = pedidoPLRepository.getEstadisticaImporteMedioByEstablecimiento();
-
-	        Map<String, Double> resultado = new HashMap<>();
-
-	        lista.stream().forEach(fila -> {
-	            resultado.put((String) fila[0], (Double) fila[1]);
-	        });
-
-	        return resultado;
-	    }
-
-	    // TODO Los dependientes vienen con el nombre completo y su ID en formato "[2334] López Ridruejo, Fermín"
+	  // TODO Los dependientes vienen con el nombre completo y su ID en formato "[2334] López Ridruejo, Fermín"
 	   
-	    @Override
-	    public Map<String, Integer> getEstadisticaNumeroPedidosByDependiente() {
+	  @Override
+	 public Map<String, Integer> getEstadisticaNumeroPedidosByDependiente() {
 
 	        List<Object[]> resultados = pedidoPLRepository.getEstadisticaNumeroPedidosByDependiente();
 
@@ -180,10 +180,18 @@ public class PedidoServicesImpl implements PedidoServices{
 	        return estadistica;
 	 }
 
-	@Override
-	public Map<String, Integer> getEstadisticaNumeroPedidosByDependiente(Date desde, Date hasta) {
-		// TODO Auto-generated method stub
-		return null;
+	 @Override
+	 public Map<String, Integer> getEstadisticaNumeroPedidosByDependiente(Date desde, Date hasta) {
+		 
+		 List<Object[]> resultados = pedidoPLRepository.getEstadisticaNumeroPedidosByDependiente(desde, hasta);
+		 
+		 Map<String, Integer> estadistica = new HashMap<>();
+		 
+		 resultados.stream().forEach(fila -> {
+	        estadistica.put((String) fila[0], ((Long) fila[1]).intValue());
+	     });
+		 
+		 return estadistica;
 	}
 	
 	// *******************************************************
