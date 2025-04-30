@@ -7,20 +7,86 @@
 	},
 	"item": [
 		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "token request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"u1\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/donpollo/auth/signin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"donpollo",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Establecimientos",
 			"item": [
 				{
 					"name": "obtener todos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1MSIsInJvbGVzIjpbIlNVUEVSX0FETUlOIiwiQURNSU4iLCJDTElFTlRFIl0sIm5vbWJyZSI6IlBlcMOtbiBHw6FsdmV6IFJpZHJ1ZWp1ZWxhIiwiaWF0IjoxNzQ1OTk3MTA3LCJleHAiOjE3NDYwMDYxMDd9.0yJavdU1B3s8ftIw4pk2qxUbABoIz_xIc0ozFqGOY7I",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1MSIsInJvbGVzIjpbIlNVUEVSX0FETUlOIiwiQURNSU4iLCJDTElFTlRFIl0sIm5vbWJyZSI6IlBlcMOtbiBHw6FsdmV6IFJpZHJ1ZWp1ZWxhIiwiaWF0IjoxNzQ1OTk3MTA3LCJleHAiOjE3NDYwMDYxMDd9.0yJavdU1B3s8ftIw4pk2qxUbABoIz_xIc0ozFqGOY7I",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "{{baseURL}}/establecimientos",
+							"raw": "{{baseURL}}/establecimientos?view=DtO3",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"establecimientos"
+							],
+							"query": [
+								{
+									"key": "view",
+									"value": "dto1",
+									"disabled": true
+								},
+								{
+									"key": "view",
+									"value": "DTO2",
+									"disabled": true
+								},
+								{
+									"key": "view",
+									"value": "DtO3"
+								}
 							]
 						}
 					},
@@ -130,6 +196,49 @@
 			"name": "Productos",
 			"item": [
 				{
+					"name": "estadísticas",
+					"item": [
+						{
+							"name": "número productos por familia",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/productos/estadisticas/by-familia",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"productos",
+										"estadisticas",
+										"by-familia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "precio medio productos por familia",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/productos/estadisticas/precio-medio-by-familia",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"productos",
+										"estadisticas",
+										"precio-medio-by-familia"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "obtener listados",
 					"request": {
 						"method": "GET",
@@ -209,7 +318,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Pollo POSTMAN UPDATED\",\r\n    \"fechaAlta\": \"2023-08-22T22:00:00.000+00:00\",\r\n    \"precio\": 17.2,\r\n    \"descripcion\": \"Delicioso pollo POSTMAN UPDATED\",\r\n    \"familia\": {\r\n        \"id\": 100,\r\n        \"nombre\": \"COMIDAS\"\r\n    },\r\n    \"descatalogado\": true\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Pollo POSTMAN UPDATED\",\r\n    \"fechaAlta\": \"2023-08-22T22:00:00.000+00:00\",\r\n    \"precio\": 17.2,\r\n    \"descripcion\": \"Delicioso pollo POSTMAN UPDATED\",\r\n    \"familia\": {\r\n        \"id\": 4,\r\n        \"nombre\": \"COMIDAS\"\r\n    },\r\n    \"descatalogado\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -246,6 +355,28 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -341,6 +472,27 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "obtener por ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/clientes/12",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"clientes",
+								"12"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -352,6 +504,38 @@
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pedidos?view=dto1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "view",
+									"value": "dto1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fechaHora\": \"2023-04-17T07:37:43.401+00:00\",\r\n    \"cliente\": {\"id\": 10},\r\n    \"dependiente\": {\"id\": 11},\r\n    \"establecimiento\": {\"id\": 1},\r\n    \"estado\": \"ENTREGADO\",\r\n    \"observaciones\": null,\r\n    \"lineas\": [\r\n        {\r\n            \"producto\": {\"id\": 156},\r\n            \"cantidad\": 666,\r\n            \"precio\": 1.5\r\n        },\r\n        {\r\n            \"producto\": {\"id\": 158},\r\n            \"cantidad\": 3,\r\n            \"precio\": 1.5\r\n        },\r\n        {\r\n            \"producto\": {\"id\": 115},\r\n            \"cantidad\": 2,\r\n            \"precio\": 2.5\r\n        }  \r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{baseURL}}/pedidos",
 							"host": [
@@ -365,6 +549,38 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1MSIsInJvbGVzIjpbIlNVUEVSX0FETUlOIiwiQURNSU4iLCJDTElFTlRFIl0sIm5vbWJyZSI6IlBlcMOtbiBHw6FsdmV6IFJpZHJ1ZWp1ZWxhIiwiaWF0IjoxNzQ2MDA0MDI3LCJleHAiOjE3NDYwMTMwMjd9.tFuC4xSLdVlXIxGOKdfv6g4Mx5bamggwaIMzXabgR8I",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

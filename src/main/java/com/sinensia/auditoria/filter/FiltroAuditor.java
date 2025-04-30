@@ -27,6 +27,8 @@ public class FiltroAuditor implements Filter {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		
+		System.out.println("** FILTRO AUDITOR   ***************************************************************");
+		
 		Long id = System.currentTimeMillis();
 	
 		chain.doFilter(req, res);

@@ -66,6 +66,7 @@ public class SecurityConfig {
 				);
 		
 		http.authenticationProvider(getAuthenticationProvider());
+		
 		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 		
 		return http.build();

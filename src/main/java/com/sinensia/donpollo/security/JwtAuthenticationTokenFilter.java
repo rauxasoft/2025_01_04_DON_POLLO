@@ -22,12 +22,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private JwtUtils jwtUtils;
-	
+		
 	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+	
+		System.out.println("** FILTRO SEGURIDAD ************** " + request.getMethod() + request.getRequestURI() + " **************************************");    
 		
 		try {
 			
