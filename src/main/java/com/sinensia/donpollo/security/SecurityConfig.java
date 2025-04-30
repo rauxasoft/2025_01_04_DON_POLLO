@@ -28,19 +28,16 @@ public class SecurityConfig {
 	@Autowired
 	private JwtAuthenticationEntryPoint unathorizedHandler;
 	
-	@Autowired
-	private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	/*
+	
 	@Bean
 	JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
 		return new JwtAuthenticationTokenFilter();
 	}
-	*/
+	
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
 		return authConfig.getAuthenticationManager();
@@ -50,9 +47,6 @@ public class SecurityConfig {
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector instrospector){
 		return new MvcRequestMatcher.Builder(instrospector);
 	}
-	
-	
-	// AHORA SI! Vamos a configurar la seguridad. Quien entra cómo y dónde...
 	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
@@ -72,7 +66,7 @@ public class SecurityConfig {
 				);
 		
 		http.authenticationProvider(getAuthenticationProvider());
-		http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 		
 		return http.build();
 	}

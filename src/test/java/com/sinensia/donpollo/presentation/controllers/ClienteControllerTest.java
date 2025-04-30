@@ -1,7 +1,6 @@
 package com.sinensia.donpollo.presentation.controllers;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -16,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -30,7 +28,6 @@ import com.sinensia.donpollo.common.presentation.ErrorResponse;
             excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, 
             									   classes = FiltroAuditor.class)
 )
-@WithMockUser(username="user", roles={"SUPER_ADMIN", "ADMIN", "USER"})
 public class ClienteControllerTest extends AbstractControllerTest {
 
 	@MockitoBean
@@ -94,9 +91,9 @@ public class ClienteControllerTest extends AbstractControllerTest {
 		
 		String requestBody = objectMapper.writeValueAsString(cliente1);
 		
-		mockMvc.perform(post("/clientes").content(requestBody).contentType(MediaType.APPLICATION_JSON).with(csrf()))
+		mockMvc.perform(post("/clientes").content(requestBody).contentType(MediaType.APPLICATION_JSON))
 						.andExpect(status().isCreated())
-						.andExpect(header().string("Location", "http://localhost/clientes/200"));	
+						.andExpect(header().string("Location","http://localhost/clientes/200"));	
 	}
 
 	@Test
