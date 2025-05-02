@@ -1,0 +1,61 @@
+
+Las promociones no se pueden solapar por fechas. A la hora de crear
+una nueva promoción se tendrá que controlar que no se solape.
+
+- promoción "Estamos locos"
+
+inicio: 05/05/2025
+fin:    20/05/2025
+
+Si se piden productos de las familias: TAPA, REFRESCO 
+cualquier producto de la lista productos en promoción sale gratis
+
+productos en promoción = {pp1, pp2, .... ppn}
+
+A la hora de establecer qué productos estarán a precio 0 siempre haremos
+que el cliente salga beneficiado. Los más caros se pondrán a 0.
+
+
+Producto             Familia    Cantidad   Precio
+Patatas		         TAPA			2		xxx
+Cocacol		         REFRESCO		1		xxx
+Ensaladilla	         TAPA			1		xxx
+Fanta		         REFRESCO		3		xxx
+Cafe Solo		     CAFE			3       1,5
+
+====================================================
+
+======
+FASE 1
+======
+
+Modelo
+
+- Una promoción tiene:
+
+	- id: Long
+	- nombre: String
+	- desde: Date
+	- hasta: Date
+	- lista de familias: Set<Familia>
+	- lista de productos en promoción: Set<Producto>  (los productos que estarán con importe 0)
+
+1.- Crear una promoción
+
+	- Se crea desde la API REST
+	- Controlar si es válida (que no se solape con otras)
+	- Persistirla
+
+2.- Obtener un listado de promociones
+
+3.- Editar una promoción
+
+	- Se edita desde Postam
+	- Controlar si es válida (que no se solape con otras)
+
+======
+FASE 2
+======
+
+* proximamente...
+
