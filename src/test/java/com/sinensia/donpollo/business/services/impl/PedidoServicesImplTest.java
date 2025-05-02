@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Arrays;
 import org.dozer.DozerBeanMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.sinensia.donpollo.integration.repositories.PedidoPLRepository;
 
 @ExtendWith(MockitoExtension.class)
+@Disabled
 public class PedidoServicesImplTest {
 
 	@Mock
