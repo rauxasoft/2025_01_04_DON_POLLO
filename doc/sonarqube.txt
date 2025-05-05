@@ -1,0 +1,7 @@
+
+// TODO EN 1 CON JACOCO
+
+
+SONAR_TOKEN=squ_bd5478e86d701c0140b3fbb4a3aba9d0f3e97325
+
+mvn clean verify jacoco:report sonar:sonar -D.sonar.projectKey=RDonPollo -Dsonar.projectName=RDonPollo -Dsonar.host.url=http://localhost:9000 -D.sonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
