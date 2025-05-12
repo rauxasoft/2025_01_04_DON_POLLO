@@ -93,8 +93,8 @@ public class PedidoController {
     
 	@GetMapping("/estadisticas/by-establecimiento/fechas")
 	public Map<String, Integer> getEstadisticaNumeroPedidosByEstablecimiento(
-			@RequestParam("desde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date desde,
-	        @RequestParam("hasta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date hasta) {
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date desde,
+	        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date hasta) {
 
 	        return pedidoServices.getEstadisticaNumeroPedidosByEstablecimiento(desde, hasta);
 	} 
