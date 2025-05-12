@@ -2,6 +2,7 @@ package com.sinensia.auditoria.filter;
 
 import java.io.IOException;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.sinensia.auditoria.integration.RequestLogRepository;
@@ -15,6 +16,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@Profile("!test")
 @Component
 public class FiltroAuditor implements Filter {
 
@@ -26,8 +28,6 @@ public class FiltroAuditor implements Filter {
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-		
-		System.out.println("** FILTRO AUDITOR   ***************************************************************");
 		
 		Long id = System.currentTimeMillis();
 	

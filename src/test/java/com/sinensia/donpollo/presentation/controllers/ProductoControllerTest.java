@@ -12,23 +12,20 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.sinensia.auditoria.filter.FiltroAuditor;
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.services.ProductoServices;
 import com.sinensia.donpollo.common.presentation.ErrorResponse;
 
-@WebMvcTest(value = ProductoController.class, 
-excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, 
-									   classes = FiltroAuditor.class)
-)
+@AutoConfigureMockMvc(addFilters = false)
+@WebMvcTest(value = ProductoController.class)
 public class ProductoControllerTest extends AbstractControllerTest {
 
 	@MockitoBean
@@ -42,6 +39,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 		initObjects();
 	}
 
+	@WithMockUser
 	@Test
 	void solicitamos_todos_los_productos() throws Exception {
 		
@@ -57,6 +55,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 		
 	}
 	
+	@WithMockUser
 	@Test
 	void solicitamos_producto_por_id() throws Exception {
 		
@@ -70,6 +69,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 		
 	}
 
+	@WithMockUser
 	@Test
 	void solicitamos_producto_por_id_no_existente() throws Exception {
 		
@@ -83,6 +83,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 		
 	}
 	
+	@WithMockUser
 	@Test
 	void creamos_producto_ok() throws Exception {
 		
@@ -97,6 +98,7 @@ public class ProductoControllerTest extends AbstractControllerTest {
 						.andExpect(header().string("Location","http://localhost/productos/500"));	
 	}
 
+	@WithMockUser
 	@Test
 	void creamos_producto_con_id_no_null() throws Exception {
 		

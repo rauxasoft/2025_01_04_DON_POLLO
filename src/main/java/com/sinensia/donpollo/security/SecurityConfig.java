@@ -61,6 +61,7 @@ public class SecurityConfig {
 				auth.requestMatchers("/donpollo/auth/signin/**").permitAll()					// Para permitir el acceso al servidor de autenticación
 				    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()						// Permitir acceso a métodos OPTIONS (lo utilizan los navegadores)
 				    .requestMatchers("/h2-console/**").permitAll()								// Para permitir el acceso a la consola H2
+				    .requestMatchers("/familias/**").permitAll()								// Para permitir el acceso "/familias"
 				    .anyRequest().authenticated()												// El resto de end-points requieren estar autenticado
 				
 				);

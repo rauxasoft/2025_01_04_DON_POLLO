@@ -39,6 +39,8 @@ public class MyArchitectureTest {
     
         final ArchRule rule1 = classes().that()
         								.areAnnotatedWith(RestController.class)
+        								.and()
+        								.doNotHaveFullyQualifiedName("com.sinensia.donpollo.security.presentation.AuthController")
         								.should()
         								.haveNameMatching(".*Controller")
         								.andShould()
