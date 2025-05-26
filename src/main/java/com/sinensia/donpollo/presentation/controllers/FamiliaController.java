@@ -23,6 +23,13 @@ public class FamiliaController {
 	
 	@GetMapping
 	public List<Familia> getAll(){
+		
+		try {
+			Thread.sleep(1200);
+		} catch (InterruptedException e) {
+			
+		}
+		
 		return familiaServices.getAll();
 	}
 
