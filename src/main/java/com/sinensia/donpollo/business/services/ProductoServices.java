@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.sinensia.donpollo.business.model.Familia;
 import com.sinensia.donpollo.business.model.Producto;
+import com.sinensia.donpollo.business.model.dtos.Oferta;
 import com.sinensia.donpollo.business.model.dtos.ProductoDTO1;
 import com.sinensia.donpollo.business.model.dtos.ProductoDTO2;
 
@@ -100,4 +101,6 @@ public interface ProductoServices {
 	List<ProductoDTO1> getDTO1();
 	
 	List<ProductoDTO2> getDTO2();
+	
+	List<Oferta> getOfertas();
 }

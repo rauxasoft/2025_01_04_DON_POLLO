@@ -1,5 +1,7 @@
 package com.sinensia.donpollo.business.services.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Familia;
 import com.sinensia.donpollo.business.model.Producto;
+import com.sinensia.donpollo.business.model.dtos.Oferta;
 import com.sinensia.donpollo.business.model.dtos.ProductoDTO1;
 import com.sinensia.donpollo.business.model.dtos.ProductoDTO2;
 import com.sinensia.donpollo.business.services.ProductoServices;
@@ -27,6 +30,7 @@ public class ProductoServicesImpl implements ProductoServices {
 
 	private final ProductoPLRepository productoPLRepository;
 	private final DozerBeanMapper mapper;
+	private List<Oferta> productosOferta = new ArrayList<>();
 	
 	public ProductoServicesImpl(ProductoPLRepository productoRepository, DozerBeanMapper mapper) {
 		this.productoPLRepository = productoRepository;
@@ -229,6 +233,18 @@ public class ProductoServicesImpl implements ProductoServices {
 				}).toList();
 	}
 	
+	@Override
+	public List<Oferta> getOfertas() {
+		
+		List<ProductoPL> productosPL = productoPLRepository.findAll();
+		
+		if(this.productosOferta.size() == 0 || Math.random() > 0.8) {
+			generarOfertas(productosPL);
+		}
+		
+		return productosOferta;
+	}
+	
 	// *******************************************************
 	//
 	// Private Methods
@@ -240,6 +256,22 @@ public class ProductoServicesImpl implements ProductoServices {
 		return productosPL.stream()
 				.map(x -> mapper.map(x, Producto.class))
 				.toList();
+	}
+	
+	private void generarOfertas(List<ProductoPL> productosPL) {
+		
+		this.productosOferta.clear();
+		
+		Collections.shuffle(productosPL);
+		
+		for(int i = 0; i < 5; i++) {
+			ProductoPL productoPL = productosPL.get(i);
+			double nuevoPrecio = productoPL.getPrecio() - productoPL.getPrecio() * 0.20;
+			nuevoPrecio = Math.round(nuevoPrecio * 100) / 100.0;
+			Oferta oferta = new Oferta(productoPL.getId(), productoPL.getNombre(), productoPL.getFamilia().getNombre(), productoPL.getPrecio(), nuevoPrecio);
+			this.productosOferta.add(oferta);
+		}
+		
 	}
 	
 }

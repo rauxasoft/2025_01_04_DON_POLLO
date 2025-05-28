@@ -63,7 +63,7 @@ public class SecurityConfig {
 				    .requestMatchers("/h2-console/**").permitAll()								// Para permitir el acceso a la consola H2
 				    .requestMatchers("/familias/**").permitAll()								// Para permitir el acceso "/familias"
 				//  .requestMatchers("/dependientes/**").permitAll()							// Para permitir el acceso "/dependientes"
-				//  .requestMatchers("/productos/**").permitAll()								// Para permitir el acceso "/productos"
+				    .requestMatchers("/productos/**").permitAll()								// Para permitir el acceso "/productos"
 				//  .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "(swagger-ui/**").permitAll()
 				    
 				    .anyRequest().authenticated()												// El resto de end-points requieren estar autenticado

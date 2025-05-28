@@ -2,6 +2,7 @@ package com.sinensia.donpollo.presentation.controllers;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sinensia.donpollo.business.model.Producto;
+import com.sinensia.donpollo.business.model.dtos.Oferta;
 import com.sinensia.donpollo.business.services.ProductoServices;
 import com.sinensia.donpollo.common.presentation.ErrorResponse;
 
@@ -127,6 +129,11 @@ public class ProductoController {
 		});
 		
 		return resultados;
+	}
+	
+	@GetMapping("/ofertas")
+	public List<Oferta> getOfertas(){
+		return productoServices.getOfertas();
 	}
 
 }
