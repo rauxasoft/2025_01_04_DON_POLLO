@@ -22,13 +22,9 @@ public class FamiliaController {
 	}
 	
 	@GetMapping
-	public List<Familia> getAll(){
+	public List<Familia> getAll() throws Exception {
 		
-		try {
-			Thread.sleep(1200);
-		} catch (InterruptedException e) {
-			
-		}
+		Thread.sleep(1200);
 		
 		return familiaServices.getAll();
 	}
