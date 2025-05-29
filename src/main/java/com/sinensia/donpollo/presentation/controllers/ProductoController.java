@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.sinensia.donpollo.business.config.BusinessException;
 import com.sinensia.donpollo.business.model.Producto;
 import com.sinensia.donpollo.business.model.dtos.Oferta;
 import com.sinensia.donpollo.business.services.ProductoServices;
@@ -132,7 +133,14 @@ public class ProductoController {
 	}
 	
 	@GetMapping("/ofertas")
-	public List<Oferta> getOfertas(){
+	public List<Oferta> getOfertas() throws InterruptedException{
+		
+		Thread.sleep(1500);
+		
+		if(Math.random() > 0.7) {
+			throw new BusinessException("El servidor ha pasado mala noche. No se han podido generar las ofertas :-(");
+		}
+			
 		return productoServices.getOfertas();
 	}
 
