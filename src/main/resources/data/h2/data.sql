@@ -88,7 +88,9 @@ INSERT INTO PRODUCTOS (CODIGO, NOMBRE, DESCRIPCION, FECHA_ALTA, PRECIO, DESCATAL
 (166,'Donut', null, '2017-10-25', 2.7, FALSE, 11),
 (167,'Madalena Integral', null, '2017-10-25', 2.7, FALSE, 11),
 (168,'Madalena Integral Pequeña', null, '2017-10-25', 1.5, FALSE, 11),
-(169,'Pastéis de Belem (2 piezas)', 'Deliciosos pastelitos traidos en helicoptero cada mañana desde Lisboa.', '2018-10-22', 3.5, FALSE, 11);
+(169,'Pastéis de Belem (2 piezas)', 'Deliciosos pastelitos traidos en helicoptero cada mañana desde Lisboa.', '2018-10-22', 3.5, FALSE, 11),
+(170,'Torta del casar', 'Deliciosa tapa de queso cremoso con denominación de origen se San Pedro (Cáceres)', '2018-10-22', 6.0, FALSE, 4),
+(171,'Cerveza Victoria 33cl', 'La cerveza oficial ne Málaga', '2017-10-21', 3.0, FALSE, 3);
 
 INSERT INTO ESTABLECIMIENTOS (ID,
 							  NOMBRE_COMERCIAL,
