@@ -138,7 +138,7 @@ public class ProductoController {
 		Thread.sleep(1500);
 		
 		if(Math.random() > 0.7) {	
-			throw new BusinessException("El servidor ha pasado mala noche. No se han podido generar las ofertas :-(");
+			throw new BusinessException("Error en el servidor. No se han podido generar las ofertas :-(");
 		}
 			
 		return productoServices.getOfertas();
