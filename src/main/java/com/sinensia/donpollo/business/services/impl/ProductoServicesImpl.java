@@ -22,6 +22,7 @@ import com.sinensia.donpollo.business.services.ProductoServices;
 import com.sinensia.donpollo.integration.model.FamiliaPL;
 import com.sinensia.donpollo.integration.model.ProductoPL;
 import com.sinensia.donpollo.integration.repositories.ProductoPLRepository;
+import com.sinensia.rabbitmq.ProductoCreadoEventPublisher;
 
 import jakarta.transaction.Transactional;
 
@@ -29,11 +30,13 @@ import jakarta.transaction.Transactional;
 public class ProductoServicesImpl implements ProductoServices {
 
 	private final ProductoPLRepository productoPLRepository;
+	private final ProductoCreadoEventPublisher productoCreadoEventPublisher;
 	private final DozerBeanMapper mapper;
 	private List<Oferta> productosOferta = new ArrayList<>();
 	
-	public ProductoServicesImpl(ProductoPLRepository productoRepository, DozerBeanMapper mapper) {
+	public ProductoServicesImpl(ProductoPLRepository productoRepository, DozerBeanMapper mapper, ProductoCreadoEventPublisher productoCreadoEventPublisher) {
 		this.productoPLRepository = productoRepository;
+		this.productoCreadoEventPublisher = productoCreadoEventPublisher;
 		this.mapper = mapper;
 	}
 	 
@@ -47,7 +50,11 @@ public class ProductoServicesImpl implements ProductoServices {
 		
 		ProductoPL productoPL = mapper.map(producto, ProductoPL.class);
 	
+		productoCreadoEventPublisher.publicarProductoCreado(producto);
+		
 		return productoPLRepository.save(productoPL).getId();
+		
+		
 	}
 
 	@Override
